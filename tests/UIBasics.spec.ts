@@ -1,5 +1,4 @@
-import {test, expect} from "../fixtures/fixture";
-import { expect as early } from "@playwright/test";
+import {test, tests} from "../fixtures/fixture";
 import { ShoppingPage } from "../pages/shoppingPage";
 
 test.describe('test suite for Login',() => {
@@ -7,9 +6,8 @@ test.describe('test suite for Login',() => {
     //     await loginPage.navigateToLoginPage();
     // });
 
-    test.only('Login test case',async ({ loginPage }) => {
-    //    loginPage.verifyPageTitle("LoginPage Practise | Rahul Shetty Academy");
-    const shopppingPage: ShoppingPage = new ShoppingPage(loginPage.page);
+    test('Verify that checkout button has number of items added for shopping at all times',async ({ afterLoginPage }) => {
+    const shopppingPage: ShoppingPage = new ShoppingPage(afterLoginPage.page);
     await shopppingPage.clickOnAddButtonForAnItemWithName("iphone X");
     await shopppingPage.verifyNumberOfItemsOnCartButton(1);
     await shopppingPage.clickOnAddButtonForAnItemWithName("Samsung Note 8");
@@ -18,6 +16,10 @@ test.describe('test suite for Login',() => {
     await shopppingPage.verifyNumberOfItemsOnCartButton(3);
     await shopppingPage.clickOnAddButtonForAnItemWithName("Blackberry");
     await shopppingPage.verifyNumberOfItemsOnCartButton(4);
-    //    console.log("Page title:"+s);
+
+    });
+
+    tests('Verify that new page is opened when access first link on login page',async ({ beforeLoginPage }) => {
+    await beforeLoginPage.verifyNewTabOpeningOnClickingDifferentlinks("Free Access to InterviewQues/ResumeAssistance/Material");
     });
 });
