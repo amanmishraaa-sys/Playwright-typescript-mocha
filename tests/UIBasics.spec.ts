@@ -1,4 +1,4 @@
-import {test, tests} from "../fixtures/fixture";
+import {automationTests, test, tests} from "../fixtures/fixture";
 import { ShoppingPage } from "../pages/shoppingPage";
 
 test.describe('test suite for Login',() => {
@@ -21,5 +21,9 @@ test.describe('test suite for Login',() => {
 
     tests('Verify that new page is opened when access first link on login page',async ({ beforeLoginPage }) => {
     await beforeLoginPage.verifyNewTabOpeningOnClickingDifferentlinks("Free Access to InterviewQues/ResumeAssistance/Material");
+    });
+
+    automationTests.only('Verify alert popup accepting scenario',async ({ automationPage }) => {
+    await automationPage.checkAndAcceptAlert();
     });
 });
