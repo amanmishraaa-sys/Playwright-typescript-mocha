@@ -23,7 +23,7 @@ test.describe('test suite for Login',() => {
     await beforeLoginPage.verifyNewTabOpeningOnClickingDifferentlinks("Free Access to InterviewQues/ResumeAssistance/Material");
     });
 
-    automationTests.only('Verify alert popup accepting scenario',async ({ automationPage }) => {
+    automationTests('Verify alert popup accepting scenario',async ({ automationPage }) => {
     await automationPage.checkAndAcceptAlert();
     });
 });
