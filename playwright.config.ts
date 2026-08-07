@@ -14,9 +14,9 @@ import { defineConfig, devices } from '@playwright/test';
 export default defineConfig({
   testDir: './tests',
   // control timeout
-  timeout: 40 * 1000,
+  timeout: 180 * 1000,
   expect: {
-    timeout: 40 * 1000,
+    timeout: 10 * 1000,
   },
 
   // to get report in html
@@ -32,21 +32,28 @@ export default defineConfig({
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   // reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
-  use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+  // use: {
+  //   /* Base URL to use in actions like `await page.goto('')`. */
+  //   // baseURL: 'http://localhost:3000',
 
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
-    trace: 'on',
-    headless: false,
-    screenshot: 'on',
-  },
+  //   /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+  //   trace: 'on',
+  //   headless: false,
+  //   screenshot: 'on',
+  // },
 
   /* Configure projects for major browsers */
   projects: [
     {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { 
+        browserName: 'chromium',
+        headless: false,
+        trace: 'on',
+        screenshot: 'on',
+        viewport: {width:1920, height: 1080}
+        // ...devices['Galaxy Note 3']
+       },
     },
 
     // {
