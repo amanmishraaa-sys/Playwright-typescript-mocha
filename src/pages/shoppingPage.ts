@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from "@playwright/test";
+import { Page, Locator, expect, test } from "@playwright/test";
 import { LoginPage } from "./loginPage";
 
 export class ShoppingPage extends LoginPage{
@@ -13,11 +13,15 @@ export class ShoppingPage extends LoginPage{
     }
 
     async clickOnAddButtonForAnItemWithName(itemName: string){
-        let addButton: Locator = this.targetItemForAddButton(itemName).locator("button");
-        await addButton.click();
+        await test.step(`Clicking on add button for ${itemName} item`, async() => {
+            let addButton: Locator = this.targetItemForAddButton(itemName).locator("button");
+            await addButton.click();
+        });
     }
 
     async verifyNumberOfItemsOnCartButton (itemNumber: number){
-        expect(await this.checkOutButton.textContent()).toContain(itemNumber.toString());
+        await test.step(`Verify the number (${itemNumber}) on Cart button`, async() => {
+            expect(await this.checkOutButton.textContent()).toContain(itemNumber.toString());
+        });
     }
 }
