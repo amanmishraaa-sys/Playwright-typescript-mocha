@@ -6,7 +6,7 @@ test.describe('test suite for Login',() => {
     //     await loginPage.navigateToLoginPage();
     // });
 
-    test('Verify that checkout button has number of items added for shopping at all times',async ({ afterLoginPage }) => {
+    test.only('Verify that checkout button has number of items added for shopping at all times',async ({ afterLoginPage }) => {
     const shopppingPage: ShoppingPage = new ShoppingPage(afterLoginPage.page);
         await shopppingPage.clickOnAddButtonForAnItemWithName("iphone X");
         await shopppingPage.verifyNumberOfItemsOnCartButton(1);
