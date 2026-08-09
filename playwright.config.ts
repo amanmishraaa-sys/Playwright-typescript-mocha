@@ -8,7 +8,13 @@ export default defineConfig({
   },
 
   reporter: 'html',
+
   fullyParallel: true,
+
+  retries: process.env.CI ? 2 : 0, 
+
+  workers: process.env.CI ? 6 : 6, 
+
   projects: [
     {
       name: 'chromium',

@@ -27,7 +27,7 @@ test.describe('test suite for Login',() => {
         await automationPage.checkAndAcceptAlert();
     });
 
-    test.only('Verify the upload process of a file', async ({uploadDownloadPage}) => {
+    test('Verify the upload process of a file', async ({uploadDownloadPage}) => {
         const filepath: string = "src/test-data/FileYes.xlsx";
         await uploadDownloadPage.uploadFile(filepath);
     });
