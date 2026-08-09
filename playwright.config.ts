@@ -24,7 +24,7 @@ export default defineConfig({
         trace: 'on',
         screenshot: 'on',
         viewport: {width:1920, height: 1080},
-        video: 'on'
+        video: 'off'
        },
     },
   ],
