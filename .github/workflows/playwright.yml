@@ -4,6 +4,43 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: "Browser to run tests on"
+        required: true
+        default: "chromium"
+        type: choice
+        options:
+          - chromium
+          - firefox
+          - webkit
+
+      test_path:
+        description: "Test file or directory"
+        required: false
+        default: "src/tests"
+        type: string
+
+      workers:
+        description: "Number of parallel workers"
+        required: false
+        default: "2"
+        type: number
+
+      grep:
+        description: "Run tests with this tag"
+        required: false
+        default: ""
+        type: string
+
+      retries:
+        description: "Number of retries"
+        required: false
+        default: "1"
+        type: number
+
 jobs:
   test:
     timeout-minutes: 60
@@ -13,12 +50,19 @@ jobs:
     - uses: actions/setup-node@v5
       with:
         node-version: lts/*
+
     - name: Install dependencies
       run: npm ci
+
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+
     - name: Run Playwright tests
-      run: npx playwright test
+      run: |
+          npx playwright test "${{ inputs.test_path }}" \
+            --project="${{ inputs.browser }}" \
+            --workers="${{ inputs.workers }}" \
+            --retries="${{ inputs.retries }}"
     - uses: actions/upload-artifact@v5
       if: always()
       with:

@@ -1,4 +1,5 @@
 import { Page, Locator, expect, test } from "@playwright/test";
+import { Verifier } from "../utils/verifier";
 
 export class LoginPage{
 
@@ -10,12 +11,15 @@ export class LoginPage{
     readonly loginUrl: string = "https://rahulshettyacademy.com"
     readonly blinkingTexts: Locator;
     readonly termsAndConditionsCheckbox: Locator;
+    readonly incorrectCredsErrorMessage: Locator;
+
     constructor( readonly page: Page){
         this.usernameInput = page.locator("#username");
         this.passwordInput = page.locator("#password");
         this.signInButton = page.getByRole("button",{name: "Sign In"});
         this.blinkingTexts = page.locator(".blinkingText");
         this.termsAndConditionsCheckbox = page.locator("#terms");
+        this.incorrectCredsErrorMessage = page.locator("[style='display: block;']");
     }
 
     async veryPageIsLoaded(){
@@ -75,5 +79,10 @@ export class LoginPage{
 
     async checkTermsAndConditionCheckbox(){
         !await this.termsAndConditionsCheckbox.isChecked() ? await this.termsAndConditionsCheckbox.check(): console.log("Terms and Conditions already checked");
+    }
+
+    async verfiyWrongCredsAlertMessage(){
+        await Verifier.isVisible(this.incorrectCredsErrorMessage, 10000);
+        // await expect(this.incorrectCredsErrorMessage).toBeVisible({ timeout: 10000 });
     }
 }

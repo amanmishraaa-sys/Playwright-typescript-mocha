@@ -1,12 +1,11 @@
 import { Page, Locator, expect, test } from "@playwright/test";
 import { LoginPage } from "./loginPage";
 
-export class ShoppingPage extends LoginPage{
+export class ShoppingPage {
     readonly shoppingItem: Locator;
     readonly targetItemForAddButton:(itemName: string) => Locator;
     readonly checkOutButton: Locator;
     constructor( page: Page){
-        super(page);
         this.shoppingItem = page.locator("app-card");
         this.targetItemForAddButton = (itemName: string) => this.shoppingItem.filter({hasText: itemName});
         this.checkOutButton = page.locator("[class='nav-link btn btn-primary']");
