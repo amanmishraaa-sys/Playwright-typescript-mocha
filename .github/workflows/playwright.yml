@@ -15,7 +15,6 @@ on:
         options:
           - chromium
           - firefox
-          - webkit
 
       test_path:
         description: "Test file or directory"
@@ -40,6 +39,11 @@ on:
         required: false
         default: "1"
         type: number
+
+      tags:
+        description: "Tags to include"
+        required: true
+        type: string
 
 jobs:
   test:
