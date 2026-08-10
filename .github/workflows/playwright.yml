@@ -71,9 +71,6 @@ jobs:
             --workers="${{ inputs.workers }}" \
             --retries="${{ inputs.retries }}"
           fi
-
-    - name: Create report directory if missing
-      run: mkdir -p playwright-report
     - uses: actions/upload-artifact@v5
       if: always()
       with:
