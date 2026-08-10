@@ -40,11 +40,6 @@ on:
         default: "1"
         type: number
 
-      tags:
-        description: "Tags to include"
-        required: true
-        type: string
-
 jobs:
   test:
     timeout-minutes: 60
