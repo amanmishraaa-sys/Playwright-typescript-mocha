@@ -58,10 +58,18 @@ jobs:
 
     - name: Run Playwright tests
       run: |
+          if [ -n "${{ inputs.grep }}" ]; then
+          npx playwright test "${{ inputs.test_path }}" \
+            --project="${{ inputs.browser }}" \
+            --grep="${{ inputs.grep }}" \
+            --workers="${{ inputs.workers }}" \
+            --retries="${{ inputs.retries }}"
+          else
           npx playwright test "${{ inputs.test_path }}" \
             --project="${{ inputs.browser }}" \
             --workers="${{ inputs.workers }}" \
             --retries="${{ inputs.retries }}"
+          fi
 
     - name: Create report directory if missing
       run: mkdir -p playwright-report
