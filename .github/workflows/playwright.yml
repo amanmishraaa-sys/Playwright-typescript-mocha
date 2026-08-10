@@ -57,6 +57,7 @@ jobs:
       run: npx playwright install --with-deps
 
     - name: Run Playwright tests
+      shell: bash
       run: |
           if [ -n "${{ inputs.grep }}" ]; then
           npx playwright test "${{ inputs.test_path }}" \
