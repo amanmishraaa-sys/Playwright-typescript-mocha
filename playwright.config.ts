@@ -20,18 +20,7 @@ export default defineConfig({
       name: 'chromium',
       use: { 
         browserName: 'chromium',
-        headless: true,
-        trace: 'on',
-        screenshot: 'on',
-        viewport: {width:1920, height: 1080},
-        video: 'on'
-       },
-    },
-    {
-      name: 'firefox',
-      use: { 
-        browserName: 'firefox',
-        headless: true,
+        headless: false,
         trace: 'on',
         screenshot: 'on',
         viewport: {width:1920, height: 1080},

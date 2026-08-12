@@ -1,14 +1,18 @@
 import { Page, Locator, expect, test } from "@playwright/test";
 import { Verifier } from "../utils/verifier";
+import dotenv from "dotenv";
+import path from "path";
+
+dotenv.config({ path: path.resolve(__dirname, '../../testcases.env'), override: true });
 
 export class LoginPage{
 
     readonly usernameInput: Locator;
     readonly passwordInput: Locator;
     readonly signInButton: Locator;
-    readonly username: string = "rahulshettyacademy";
-    readonly password: string = "Learning@830$3mK2";
-    readonly loginUrl: string = "https://rahulshettyacademy.com"
+    readonly username: string = process.env.username!;
+    readonly password: string = process.env.password!;
+    readonly loginUrl: string = process.env.baseUrl!;
     readonly blinkingTexts: Locator;
     readonly termsAndConditionsCheckbox: Locator;
     readonly incorrectCredsErrorMessage: Locator;
@@ -37,6 +41,7 @@ export class LoginPage{
 
     async loginIntoThePage(){
         await this.navigateToLoginPage();
+        console.log(`Logging in with baseUrl: ${this.loginUrl} and username: ${this.username} and password: ${this.password}`);
         await this.enterUsername(this.username);
         await this.enterPassword(this.password);
         await this.checkTermsAndConditionCheckbox();
@@ -46,12 +51,14 @@ export class LoginPage{
 
     async enterUsername(username: string){
         await test.step(`Enter username as ${username}`, async()=>{
+            await this.usernameInput.clear();
             await this.usernameInput.fill(username);
         });
     }
     
     async enterPassword(password: string){
         await test.step(`Enter password as ${password}`, async()=>{
+            await this.passwordInput.clear();
             await this.passwordInput.fill(password);
         });
     }
@@ -83,6 +90,5 @@ export class LoginPage{
 
     async verfiyWrongCredsAlertMessage(){
         await Verifier.isVisible(this.incorrectCredsErrorMessage, 10000);
-        // await expect(this.incorrectCredsErrorMessage).toBeVisible({ timeout: 10000 });
     }
 }

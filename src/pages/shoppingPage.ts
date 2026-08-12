@@ -1,5 +1,6 @@
 import { Page, Locator, expect, test } from "@playwright/test";
-import { LoginPage } from "./loginPage";
+
+
 
 export class ShoppingPage {
     readonly shoppingItem: Locator;
