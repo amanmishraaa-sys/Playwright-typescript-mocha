@@ -55,15 +55,6 @@ test.describe("test suite for Login", () => {
   );
 
   test(
-    "Verify the upload process of a file",
-    { tag: ["@smoke"] },
-    async ({ uploadDownloadPage }) => {
-      const filepath: string = "src/test-data/FileYes.xlsx";
-      await uploadDownloadPage.uploadFile(filepath);
-    },
-  );
-
-  test(
     `Verify the downloadding, modfication, uploading, validating the modification on the page and deletion of the file`,
     { tag: ["@smoke", "@download"] },
     async ({ uploadDownloadPage }) => {
