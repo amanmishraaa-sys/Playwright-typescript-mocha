@@ -26,6 +26,17 @@ export default defineConfig({
         viewport: {width:1920, height: 1080},
         video: 'on'
        },
+    },
+    {
+      name: 'firefox',
+      use: { 
+        browserName: 'firefox',
+        headless: false,
+        trace: 'on',
+        screenshot: 'on',
+        viewport: {width:1920, height: 1080},
+        video: 'on'
+       },
     }
   ],
 });
