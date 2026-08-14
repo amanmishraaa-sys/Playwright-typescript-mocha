@@ -1,4 +1,4 @@
-import { test ,expect, Locator } from "@playwright/test";
+import { test, expect, Locator } from "@playwright/test";
 import { FileUtils } from "./fileUtils";
 
 export class Verifier {
@@ -15,7 +15,7 @@ export class Verifier {
     expectedText: string,
     timeout?: number,
   ) {
-    await test.step(`Verify text for the given locator: ${locator}`, async() => {
+    await test.step(`Verify text for the given locator: ${locator}`, async () => {
       await expect(locator).toHaveText(expectedText, { timeout: timeout });
     });
   }

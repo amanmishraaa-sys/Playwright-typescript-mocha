@@ -47,8 +47,8 @@ export class UploadDownloadPage {
   }
 
   async deleteDownloadedFile() {
-    await test.step(`Delete the downloaded file at this path: ${downloadPath}`, async()=>{
-    await FileUtils.deleteFileIfExists(downloadPath);
+    await test.step(`Delete the downloaded file at this path: ${downloadPath}`, async () => {
+      await FileUtils.deleteFileIfExists(downloadPath);
     });
   }
 

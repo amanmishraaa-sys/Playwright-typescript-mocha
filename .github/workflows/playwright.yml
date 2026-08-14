@@ -15,6 +15,7 @@ on:
         options:
           - chromium
           - firefox
+          - all
 
       test_path:
         description: "Test file or directory"
@@ -54,7 +55,13 @@ jobs:
       run: npm ci
 
     - name: Install the required Playwright Browser
-      run: npx playwright install ${{ inputs.browser }} --with-deps
+      shell: bash
+      run: |
+        if [ "${{ inputs.browser }}" = "all" ]; then
+          npx playwright install --with-deps
+        else
+          npx playwright install ${{ inputs.browser }} --with-deps
+        fi
 
     - name: Run Playwright tests
       shell: bash
