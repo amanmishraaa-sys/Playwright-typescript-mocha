@@ -64,20 +64,27 @@ jobs:
         fi
 
     - name: Run Playwright tests
-      shell: bash
+      shell: pwsh
       run: |
-          if [ -n "${{ inputs.grep }}" ]; then
-          npx playwright test "${{ inputs.test_path }}" \
-            --project="${{ inputs.browser }}" \
-            --grep="${{ inputs.grep }}" \
-            --workers="${{ inputs.workers }}" \
-            --retries="${{ inputs.retries }}"
-          else
-          npx playwright test "${{ inputs.test_path }}" \
-            --project="${{ inputs.browser }}" \
-            --workers="${{ inputs.workers }}" \
-            --retries="${{ inputs.retries }}"
-          fi
+        $testCommand = "npx playwright test `"${{ inputs.test_path }}`""
+
+        # Browser selection
+        if ("${{ inputs.browser }}" -ne "all") {
+          $testCommand += " --project=`"${{ inputs.browser }}`""
+        }
+
+        # Tag selection
+        if ("${{ inputs.grep }}" -ne "") {
+          $testCommand += " --grep=`"${{ inputs.grep }}`""
+        }
+
+        # Workers and retries
+        $testCommand += " --workers=`"${{ inputs.workers }}`""
+        $testCommand += " --retries=`"${{ inputs.retries }}`""
+
+        Write-Host "Executing: $testCommand"
+        Invoke-Expression $testCommand
+
     - uses: actions/upload-artifact@v5
       if: always()
       with:
