@@ -43,14 +43,9 @@ export class ExcelUtil {
     rowNumber: number,
     columnNumber: number,
   ) {
-    await this.writeFile(
-      workbook,
-      worksheet,
-      rowNumber,
-      columnNumber,
-      newValue,
-      path,
-    );
+    const cell = worksheet.getCell(rowNumber, columnNumber);
+    cell.value = newValue;
+    await workbook.xlsx.writeFile(path);
   }
 
   static async readFileToGetCoordinates(
@@ -75,18 +70,5 @@ export class ExcelUtil {
       return { rowNumber: 0, columnNumber: 0 };
     }
     return { rowNumber: rowOutput, columnNumber: colOutput };
-  }
-
-  static async writeFile(
-    workbook: ExcelJS.Workbook,
-    worksheet: ExcelJS.Worksheet,
-    rowNumber: number,
-    columnNumber: number,
-    newValue: string,
-    path: string,
-  ) {
-    const cell = worksheet.getCell(rowNumber, columnNumber);
-    cell.value = newValue;
-    await workbook.xlsx.writeFile(path);
   }
 }

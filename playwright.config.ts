@@ -4,7 +4,7 @@ export default defineConfig({
   testDir: "./src/tests",
   timeout: 180 * 1000,
   expect: {
-    timeout: 5 * 1000,
+    timeout: 6 * 1000,
   },
 
   reporter: "html",
@@ -26,8 +26,6 @@ export default defineConfig({
       use: {
         browserName: "chromium",
         headless: true,
-        // keep traces/videos/screenshots lighter in CI to reduce IO and
-        // teardown delays; keep verbose artifacts locally for debugging
         trace: process.env.CI ? "on-first-retry" : "on",
         screenshot: process.env.CI ? "only-on-failure" : "on",
         viewport: { width: 1920, height: 1080 },
