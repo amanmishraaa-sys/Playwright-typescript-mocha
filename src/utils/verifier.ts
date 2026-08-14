@@ -1,11 +1,13 @@
-import { expect, Locator } from "@playwright/test";
+import { test ,expect, Locator } from "@playwright/test";
 import fs from "fs";
 
 export class Verifier {
   constructor() {}
 
   static async isVisible(locator: Locator, timeout?: number) {
-    await expect(locator).toBeVisible({ timeout: timeout });
+    await test.step(`Verify if the element with locator: ${locator} is visible`, async () => {
+      await expect(locator).toBeVisible({ timeout: timeout });
+    });
   }
 
   static async textForLocator(
@@ -13,6 +15,9 @@ export class Verifier {
     expectedText: string,
     timeout?: number,
   ) {
-    await expect(locator).toHaveText(expectedText, { timeout: timeout });
+    await test.step(`Verify text for the given locator: ${locator}`, async() => {
+      await expect(locator).toHaveText(expectedText, { timeout: timeout });
+    });
+
   }
 }

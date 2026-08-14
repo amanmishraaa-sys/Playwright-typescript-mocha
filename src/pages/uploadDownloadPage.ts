@@ -47,7 +47,9 @@ export class UploadDownloadPage {
   }
 
   async deleteDownloadedFile() {
+    await test.step(`Delete the downloaded file at this path: ${downloadPath}`, async()=>{
     await FileUtils.deleteFileIfExists(downloadPath);
+    });
   }
 
   async changeThevalueInDownloadedFile(
@@ -70,6 +72,8 @@ export class UploadDownloadPage {
   }
 
   async verifyTheChangesOnThePage() {
-    await Verifier.textForLocator(this.priceCellFirstRow, "350");
+    await test.step(`Verify the changes on the page after modified file has been uploaded`, async () => {
+      await Verifier.textForLocator(this.priceCellFirstRow, "350");
+    });
   }
 }
