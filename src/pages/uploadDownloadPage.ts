@@ -42,7 +42,7 @@ export class UploadDownloadPage {
       await this.downloadButton.click();
       const download = await downloadPromise;
       await download.saveAs(downloadPath);
-      await FileUtils.pathExists(downloadPath);
+      await Verifier.givenPathExists(downloadPath);
     });
   }
 

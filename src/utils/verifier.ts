@@ -1,4 +1,5 @@
 import { test ,expect, Locator } from "@playwright/test";
+import { FileUtils } from "./fileUtils";
 
 export class Verifier {
   constructor() {}
@@ -17,6 +18,11 @@ export class Verifier {
     await test.step(`Verify text for the given locator: ${locator}`, async() => {
       await expect(locator).toHaveText(expectedText, { timeout: timeout });
     });
+  }
 
+  static async givenPathExists(path: string) {
+    await test.step(`Verify if the given path: ${path} exists`, async () => {
+      expect(await FileUtils.pathExists(path)).toBeTruthy();
+    });
   }
 }
