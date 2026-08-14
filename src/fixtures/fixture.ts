@@ -31,5 +31,3 @@ export const test = base.extend<Fixtures>({
     use(uploadDownloadPage);
   },
 });
-
-export { expect };
