@@ -9,15 +9,10 @@ export default defineConfig({
 
   reporter: "html",
 
-  // running tests from the same file in parallel can cause shared-state
-  // and resource-pressure issues in CI. Disable fullyParallel to improve
-  // stability when running the whole suite together.
   fullyParallel: true,
 
   retries: process.env.CI ? 2 : 0,
 
-  // Reduce the number of workers in CI to avoid resource exhaustion
-  // which can cause context teardown to hang and exceed timeouts.
   workers: process.env.CI ? 2 : undefined,
 
   projects: [
