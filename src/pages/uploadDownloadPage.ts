@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { ExcelUtil } from "../utils/excelUtil";
 import { Verifier } from "../utils/verifier";
+import { ActionUtil } from "../utils/actionUtil";
 
 dotenv.config({ path: path.resolve(__dirname, "../../testcases.env") });
 
@@ -17,16 +18,21 @@ export class UploadDownloadPage {
   readonly loginUrl: string = process.env.baseUrl!;
   readonly downloadButton: Locator;
   readonly priceCellFirstRow: Locator;
+  readonly actions: ActionUtil;
 
   constructor(readonly page: Page) {
     this.choosFileButton = page.locator("#fileinput");
     this.downloadButton = page.getByRole("button", { name: "Download" });
     this.priceCellFirstRow = page.locator("[id='row-0'] [data-column-id='4']");
+    this.actions = new ActionUtil(page);
   }
 
   async navigateToUploadDownloadPage() {
     await test.step(`Navigate to URL: ${this.loginUrl + "/upload-download-test/index.html"}`, async () => {
-      await this.page.goto(this.loginUrl + "/upload-download-test/index.html");
+      await this.actions.navigateToUrl(
+        this.page,
+        this.loginUrl + "/upload-download-test/index.html",
+      );
     });
   }
 
@@ -39,7 +45,8 @@ export class UploadDownloadPage {
   async clickOnDownloadButtonAndSaveFile() {
     await test.step(`Click on download button and saving the file to particular path`, async () => {
       const downloadPromise = this.page.waitForEvent("download");
-      await this.downloadButton.click();
+      await this.actions.clickElement(this.downloadButton);
+      // await this.downloadButton.click();
       const download = await downloadPromise;
       await download.saveAs(downloadPath);
       await Verifier.givenPathExists(downloadPath);

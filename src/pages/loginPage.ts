@@ -2,6 +2,7 @@ import { Page, Locator, expect, test } from "@playwright/test";
 import { Verifier } from "../utils/verifier";
 import dotenv from "dotenv";
 import path from "path";
+import { ActionUtil } from "../utils/actionUtil";
 
 dotenv.config({
   path: path.resolve(__dirname, "../../testcases.env"),
@@ -18,8 +19,10 @@ export class LoginPage {
   readonly blinkingTexts: Locator;
   readonly termsAndConditionsCheckbox: Locator;
   readonly incorrectCredsErrorMessage: Locator;
+  readonly actions: ActionUtil;
 
   constructor(readonly page: Page) {
+    this.actions = new ActionUtil(page);
     this.usernameInput = page.locator("#username");
     this.passwordInput = page.locator("#password");
     this.signInButton = page.getByRole("button", { name: "Sign In" });
@@ -30,16 +33,20 @@ export class LoginPage {
 
   async veryPageIsLoaded() {
     await test.step(`Login in confirmed`, async () => {
-      await expect(this.page).toHaveURL(
+      await Verifier.pageHasUrl(
+        this.page,
         this.loginUrl + "/angularpractice/shop",
       );
-      await this.verifyPageTitle("ProtoCommerce");
+      await Verifier.pageHasTitle(this.page, "ProtoCommerce");
     });
   }
 
   async navigateToLoginPage() {
     await test.step(`Navigate to URL: ${this.loginUrl + "/loginpagePractise/"}`, async () => {
-      await this.page.goto(this.loginUrl + "/loginpagePractise/");
+      await this.actions.navigateToUrl(
+        this.page,
+        this.loginUrl + "/loginpagePractise/",
+      );
     });
   }
 
@@ -57,27 +64,27 @@ export class LoginPage {
 
   async enterUsername(username: string) {
     await test.step(`Enter username as ${username}`, async () => {
-      await this.usernameInput.clear();
-      await this.usernameInput.fill(username);
+      await this.actions.clearField(this.usernameInput);
+      await this.actions.typeInInputField(this.usernameInput, username);
     });
   }
 
   async enterPassword(password: string) {
     await test.step(`Enter password as ${password}`, async () => {
-      await this.passwordInput.clear();
-      await this.passwordInput.fill(password);
+      await this.actions.clearField(this.passwordInput);
+      await this.actions.typeInInputField(this.passwordInput, password);
     });
   }
 
   async clickSignInButton() {
     await test.step(`Click on signin button`, async () => {
-      await this.signInButton.click();
+      await this.actions.clickElement(this.signInButton);
     });
   }
 
   async verifyPageTitle(title: string) {
     await test.step(`Verify the title of the page as ${title}`, async () => {
-      await expect(this.page).toHaveTitle(title);
+      await Verifier.pageHasTitle(this.page, title);
     });
   }
 
@@ -86,14 +93,14 @@ export class LoginPage {
       this.page.context().waitForEvent("page"),
       this.blinkingTexts.filter({ hasText: linkText }).click(),
     ]);
-    await expect(newPage).toHaveURL(this.loginUrl + "/documents-request");
+    await Verifier.pageHasUrl(newPage, this.loginUrl + "/documents-request");
     let h1Title: Locator = newPage.locator("h1");
-    await expect(h1Title.getByText("Documents request")).toBeVisible();
+    await Verifier.isVisible(h1Title.getByText("Documents request"));
   }
 
   async checkTermsAndConditionCheckbox() {
-    !(await this.termsAndConditionsCheckbox.isChecked())
-      ? await this.termsAndConditionsCheckbox.check()
+    !(await this.actions.isCheckboxChecked(this.termsAndConditionsCheckbox))
+      ? await this.actions.checkTheCheckbox(this.termsAndConditionsCheckbox)
       : console.log("Terms and Conditions already checked");
   }
 
