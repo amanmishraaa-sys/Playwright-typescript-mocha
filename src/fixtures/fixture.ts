@@ -1,13 +1,20 @@
-import { test as base, expect } from "@playwright/test";
+import { test as base, expect, APIRequestContext } from "@playwright/test";
 import { LoginPage } from "../pages/loginPage";
 import { AutomationPage } from "../pages/automationPage";
 import { UploadDownloadPage } from "../pages/uploadDownloadPage";
+import { Api } from "../api/api"
+import { NewContextFactory } from "../newContextFactory/newContextFactory";
+import { ClientLoginCartPage } from "../pages/clientLoginCartPage";
+import fs from "fs/promises";
 
 type Fixtures = {
   afterLoginPage: LoginPage;
   beforeLoginPage: LoginPage;
   automationPage: AutomationPage;
   uploadDownloadPage: UploadDownloadPage;
+  apiLogin: Api;
+  clientLoginCartPage: ClientLoginCartPage;
+  
 };
 export const test = base.extend<Fixtures>({
   afterLoginPage: async ({ page }, use) => {
@@ -30,4 +37,17 @@ export const test = base.extend<Fixtures>({
     await uploadDownloadPage.navigateToUploadDownloadPage();
     use(uploadDownloadPage);
   },
+  apiLogin: async({}, use)=> {
+    const apiContext: APIRequestContext = await NewContextFactory.createNewContextWithRequest();
+    const apiLogin = new Api(apiContext);
+    await apiLogin.loginAPI();
+    use(apiLogin);
+  },
+  clientLoginCartPage: async({ page }, use)=> {
+    const token = await fs.readFile("token.txt", "utf-8");
+    const clientLoginCartPage = new ClientLoginCartPage(page);
+    await clientLoginCartPage.navigateToPageWithToken(token);
+    use(clientLoginCartPage);
+  }
+  
 });

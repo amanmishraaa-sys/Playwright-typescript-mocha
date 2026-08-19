@@ -17,9 +17,9 @@ export class ActionUtil {
     });
   }
 
-  async navigateToUrl(page: Page, url: string) {
+  async navigateToUrl(url: string) {
     await test.step(`Navigating to URL: ${url}`, async () => {
-      await page.goto(url);
+      await this.page.goto(url);
     });
   }
 
@@ -45,5 +45,18 @@ export class ActionUtil {
     await test.step(`Get contents of the field with locator: ${locator}`, async () => {
       await locator.textContent();
     });
+  }
+
+  async uploadFile(locator: Locator, downloadpath: string){
+    await test.step(`Uploading for element with locator: ${locator} from path ${downloadpath}`, async () => {
+      await locator.setInputFiles(downloadpath);
+    });
+  }
+
+  async refreshPage(){
+    await test.step(`Refreshing the current page`, async() => {
+      await this.page.reload();
+      await this.page.waitForLoadState('networkidle');
+    })
   }
 }

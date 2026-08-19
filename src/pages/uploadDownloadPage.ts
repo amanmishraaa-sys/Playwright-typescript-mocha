@@ -29,16 +29,13 @@ export class UploadDownloadPage {
 
   async navigateToUploadDownloadPage() {
     await test.step(`Navigate to URL: ${this.loginUrl + "/upload-download-test/index.html"}`, async () => {
-      await this.actions.navigateToUrl(
-        this.page,
-        this.loginUrl + "/upload-download-test/index.html",
-      );
+      await this.actions.navigateToUrl(this.loginUrl + "/upload-download-test/index.html");
     });
   }
 
   async uploadFile(filePath: string) {
     await test.step(`Upload the file`, async () => {
-      await this.choosFileButton.setInputFiles(filePath);
+      await this.actions.uploadFile(this.choosFileButton, filePath);
     });
   }
 
@@ -46,7 +43,6 @@ export class UploadDownloadPage {
     await test.step(`Click on download button and saving the file to particular path`, async () => {
       const downloadPromise = this.page.waitForEvent("download");
       await this.actions.clickElement(this.downloadButton);
-      // await this.downloadButton.click();
       const download = await downloadPromise;
       await download.saveAs(downloadPath);
       await Verifier.givenPathExists(downloadPath);
@@ -74,7 +70,7 @@ export class UploadDownloadPage {
 
   async uploadModifiedFile() {
     await test.step(`Upload the modified file`, async () => {
-      await this.choosFileButton.setInputFiles(downloadPath);
+      await this.actions.uploadFile(this.choosFileButton, downloadPath);
     });
   }
 

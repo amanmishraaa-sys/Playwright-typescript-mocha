@@ -1,6 +1,7 @@
 import { test } from "../fixtures/fixture";
 import { LoginPage } from "../pages/loginPage";
 import { ShoppingPage } from "../pages/shoppingPage";
+import { request, expect } from "@playwright/test";
 
 test.describe("test suite for Login", () => {
   // test.beforeEach("", async ({loginPage}) => {
@@ -63,6 +64,16 @@ test.describe("test suite for Login", () => {
       await uploadDownloadPage.uploadModifiedFile();
       await uploadDownloadPage.verifyTheChangesOnThePage();
       await uploadDownloadPage.deleteDownloadedFile();
+    },
+  );
+
+    test.only(
+    `Something`,
+    { tag: ["@smoke", "@download"] },
+    async ({apiLogin, clientLoginCartPage}) => {
+      await apiLogin.addProductsInCart(["ADIDAS ORIGINAL","ZARA COAT 3","iphone 13 pro"]);
+      await clientLoginCartPage.actions.refreshPage();
+      await clientLoginCartPage.validateCartItemNames(["ADIDAS ORIGINAL","ZARA COAT 3","iphone 13 pro"]);
     },
   );
 });
