@@ -67,7 +67,7 @@ test.describe("test suite for Login", () => {
     },
   );
 
-  test.only(
+  test(
     `Something`,
     { tag: ["@shopping", "@smoke"] },
     async ({ apiLogin }) => {
@@ -79,7 +79,7 @@ test.describe("test suite for Login", () => {
     },
   );
 
-  test.only(
+  test(
     `Something two`,
     { tag: ["@shopping", "@smoke"] },
     async ({ clientLoginCartPage }) => {
