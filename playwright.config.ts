@@ -20,23 +20,23 @@ export default defineConfig({
       name: "chromium",
       use: {
         browserName: "chromium",
-        headless: false,
+        headless: true,
         trace: process.env.CI ? "on-first-retry" : "on",
         screenshot: process.env.CI ? "only-on-failure" : "on",
         viewport: { width: 1920, height: 1080 },
         video: process.env.CI ? "off" : "on",
       },
     },
-    // {
-    //   name: "firefox",
-    //   use: {
-    //     browserName: "firefox",
-    //     headless: true,
-    //     trace: process.env.CI ? "on-first-retry" : "on",
-    //     screenshot: process.env.CI ? "only-on-failure" : "on",
-    //     viewport: { width: 1920, height: 1080 },
-    //     video: process.env.CI ? "off" : "on",
-    //   },
-    // },
+    {
+      name: "firefox",
+      use: {
+        browserName: "firefox",
+        headless: true,
+        trace: process.env.CI ? "on-first-retry" : "on",
+        screenshot: process.env.CI ? "only-on-failure" : "on",
+        viewport: { width: 1920, height: 1080 },
+        video: process.env.CI ? "off" : "on",
+      },
+    },
   ],
 });

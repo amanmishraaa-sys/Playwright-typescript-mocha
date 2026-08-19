@@ -88,7 +88,9 @@ export class LoginPage {
   async verifyNewTabOpeningOnClickingDifferentlinks(linkText: string) {
     const [newPage] = await Promise.all([
       this.page.context().waitForEvent("page"),
-      await this.actions.clickElement(this.blinkingTexts.filter({ hasText: linkText }))
+      await this.actions.clickElement(
+        this.blinkingTexts.filter({ hasText: linkText }),
+      ),
     ]);
     await Verifier.pageHasUrl(newPage, this.loginUrl + "/documents-request");
     let h1Title: Locator = newPage.locator("h1");

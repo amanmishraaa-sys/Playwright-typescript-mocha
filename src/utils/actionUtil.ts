@@ -47,16 +47,16 @@ export class ActionUtil {
     });
   }
 
-  async uploadFile(locator: Locator, downloadpath: string){
+  async uploadFile(locator: Locator, downloadpath: string) {
     await test.step(`Uploading for element with locator: ${locator} from path ${downloadpath}`, async () => {
       await locator.setInputFiles(downloadpath);
     });
   }
 
-  async refreshPage(){
-    await test.step(`Refreshing the current page`, async() => {
+  async refreshPage() {
+    await test.step(`Refreshing the current page`, async () => {
       await this.page.reload();
-      await this.page.waitForLoadState('networkidle');
-    })
+      await this.page.waitForLoadState("networkidle");
+    });
   }
 }

@@ -29,7 +29,9 @@ export class UploadDownloadPage {
 
   async navigateToUploadDownloadPage() {
     await test.step(`Navigate to URL: ${this.loginUrl + "/upload-download-test/index.html"}`, async () => {
-      await this.actions.navigateToUrl(this.loginUrl + "/upload-download-test/index.html");
+      await this.actions.navigateToUrl(
+        this.loginUrl + "/upload-download-test/index.html",
+      );
     });
   }
 

@@ -44,7 +44,10 @@ export class Verifier {
     });
   }
 
-  static async stringTypeArrayEquals(firstStringTypeArray: string[], secondStringTypeArray: string []){
+  static async stringTypeArrayEquals(
+    firstStringTypeArray: string[],
+    secondStringTypeArray: string[],
+  ) {
     await test.step(`Verify that String: ${firstStringTypeArray} is equal to  ${secondStringTypeArray}`, async () => {
       expect(firstStringTypeArray.sort()).toEqual(secondStringTypeArray.sort());
     });

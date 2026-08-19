@@ -1,12 +1,10 @@
 import { APIRequestContext, request } from "@playwright/test";
 
 export class NewContextFactory {
-    constructor(){
+  constructor() {}
 
-    }
-
-    static async createNewContextWithRequest(): Promise<APIRequestContext> {
-        const apiContext = await request.newContext();
-        return apiContext;
-    }
+  static async createNewContextWithRequest(): Promise<APIRequestContext> {
+    const apiContext = await request.newContext();
+    return apiContext;
+  }
 }

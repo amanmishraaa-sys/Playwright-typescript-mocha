@@ -67,13 +67,27 @@ test.describe("test suite for Login", () => {
     },
   );
 
-    test.only(
+  test.only(
     `Something`,
-    { tag: ["@smoke", "@download"] },
-    async ({apiLogin, clientLoginCartPage}) => {
-      await apiLogin.addProductsInCart(["ADIDAS ORIGINAL","ZARA COAT 3","iphone 13 pro"]);
-      await clientLoginCartPage.actions.refreshPage();
-      await clientLoginCartPage.validateCartItemNames(["ADIDAS ORIGINAL","ZARA COAT 3","iphone 13 pro"]);
+    { tag: ["@shopping", "@smoke"] },
+    async ({ apiLogin }) => {
+      await apiLogin.addProductsInCart([
+        "ADIDAS ORIGINAL",
+        "ZARA COAT 3",
+        "iphone 13 pro",
+      ]);
+    },
+  );
+
+  test.only(
+    `Something two`,
+    { tag: ["@shopping", "@smoke"] },
+    async ({ clientLoginCartPage }) => {
+      await clientLoginCartPage.validateCartItemNames([
+        "ADIDAS ORIGINAL",
+        "ZARA COAT 3",
+        "iphone 13 pro",
+      ]);
     },
   );
 });
