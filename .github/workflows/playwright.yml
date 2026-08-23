@@ -24,7 +24,9 @@ on:
         type: choice
         options:
           - src/tests/loginPractice
-          - src/tests/UIBasics
+          - src/tests/automation
+          - src/tests/clientLogin
+          - src/tests/uploadAndDownload
           - all
 
       workers:
