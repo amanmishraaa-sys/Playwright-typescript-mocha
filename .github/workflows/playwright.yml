@@ -70,11 +70,11 @@ jobs:
     - name: Run Playwright tests
       shell: pwsh
       run: |
-        $testCommand = ""
+        $testCommand = "npx playwright test"
 
         # Test Directory selection
         if ("${{ inputs.test_path }}" -ne "all"){
-          $testCommand += " --project=`"${{ inputs.test_path }}`""
+          $testCommand += " `"${{ inputs.test_path }}`""
         }
 
         # Browser selection
