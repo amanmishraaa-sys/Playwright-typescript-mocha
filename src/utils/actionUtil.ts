@@ -1,4 +1,5 @@
 import { Page, Locator, test } from "@playwright/test";
+import { Verifier } from "./verifier";
 
 export class ActionUtil {
   constructor(readonly page: Page) {
@@ -57,6 +58,24 @@ export class ActionUtil {
     await test.step(`Refreshing the current page`, async () => {
       await this.page.reload();
       await this.page.waitForLoadState("networkidle");
+    });
+  }
+
+  async handleAutoSuggestionBox(
+    inputFieldLocator: Locator,
+    searchText: string,
+    sugesstionDropdownlocator: Locator,
+    selectText: string,
+  ) {
+    await test.step(`Handling the suggesstion box`, async () => {
+      await inputFieldLocator.fill(searchText);
+      await Verifier.isVisible(
+        sugesstionDropdownlocator.filter({ hasText: selectText }),
+      );
+      await this.clickElement(
+        sugesstionDropdownlocator.filter({ hasText: selectText }),
+      );
+      await Verifier.verifyInputFieldHasValue(inputFieldLocator, selectText);
     });
   }
 }

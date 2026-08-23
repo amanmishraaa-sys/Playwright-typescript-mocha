@@ -52,4 +52,10 @@ export class Verifier {
       expect(firstStringTypeArray.sort()).toEqual(secondStringTypeArray.sort());
     });
   }
+
+  static async verifyInputFieldHasValue(locator: Locator, text: string) {
+    await test.step(`Verify that the inputfield with locator: ${locator} has ${text}`, async () => {
+      await expect(locator).toHaveValue(text);
+    });
+  }
 }

@@ -10,7 +10,7 @@ on:
       browser:
         description: "Browser to run tests on"
         required: true
-        default: "chromium"
+        default: "all"
         type: choice
         options:
           - chromium
@@ -20,8 +20,12 @@ on:
       test_path:
         description: "Test file or directory"
         required: false
-        default: "src/tests"
-        type: string
+        default: "all"
+        type: choice
+        options:
+          - src/tests/loginPractice
+          - src/tests/UIBasics
+          - all
 
       workers:
         description: "Number of parallel workers"
@@ -66,7 +70,12 @@ jobs:
     - name: Run Playwright tests
       shell: pwsh
       run: |
-        $testCommand = "npx playwright test `"${{ inputs.test_path }}`""
+        $testCommand = ""
+
+        # Test Directory selection
+        if ("${{ inputs.test_path }}" -ne "all"){
+          $testCommand += " --project=`"${{ inputs.test_path }}`""
+        }
 
         # Browser selection
         if ("${{ inputs.browser }}" -ne "all") {
