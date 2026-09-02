@@ -15,13 +15,16 @@ export class LoginPage {
   readonly signInButton: Locator;
   readonly username: string = process.env.username!;
   readonly password: string = process.env.password!;
-  readonly loginUrl: string = process.env.baseUrl!;
+  readonly angularPracticeUrl: string = process.env.angularPractice!;
+  readonly loginPageUrl: string = process.env.loginPage!;
+  readonly baseurl: string;
   readonly blinkingTexts: Locator;
   readonly termsAndConditionsCheckbox: Locator;
   readonly incorrectCredsErrorMessage: Locator;
   readonly actions: ActionUtil;
 
-  constructor(readonly page: Page) {
+  constructor(readonly url: string, readonly page: Page) {
+    this.baseurl = url;
     this.actions = new ActionUtil(page);
     this.usernameInput = page.locator("#username");
     this.passwordInput = page.locator("#password");
@@ -35,22 +38,23 @@ export class LoginPage {
     await test.step(`Login in confirmed`, async () => {
       await Verifier.pageHasUrl(
         this.page,
-        this.loginUrl + "/angularpractice/shop",
+        this.baseurl + this.angularPracticeUrl
       );
       await Verifier.pageHasTitle(this.page, "ProtoCommerce");
     });
   }
 
   async navigateToLoginPage() {
-    await test.step(`Navigate to URL: ${this.loginUrl + "/loginpagePractise/"}`, async () => {
-      await this.actions.navigateToUrl(this.loginUrl + "/loginpagePractise/");
+    const url: string = this.baseurl + this.loginPageUrl;
+    await test.step(`Navigate to URL: ${url}`, async () => {
+      await this.actions.navigateToUrl(url);
     });
   }
 
   async loginIntoThePage() {
     await this.navigateToLoginPage();
     console.log(
-      `Logging in with baseUrl: ${this.loginUrl} and username: ${this.username} and password: ${this.password}`,
+      `Logging in with baseUrl: ${this.baseurl + this.loginPageUrl} and username: ${this.username} and password: ${this.password}`,
     );
     await this.enterUsername(this.username);
     await this.enterPassword(this.password);
@@ -92,7 +96,7 @@ export class LoginPage {
         this.blinkingTexts.filter({ hasText: linkText }),
       ),
     ]);
-    await Verifier.pageHasUrl(newPage, this.loginUrl + "/documents-request");
+    await Verifier.pageHasUrl(newPage, this.baseurl + "/documents-request");
     let h1Title: Locator = newPage.locator("h1");
     await Verifier.isVisible(h1Title.getByText("Documents request"));
   }

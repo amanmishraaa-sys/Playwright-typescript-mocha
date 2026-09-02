@@ -18,6 +18,13 @@ export class ActionUtil {
     });
   }
 
+  async validateFieldContent(locator: Locator, text: string){
+    await test.step(`Validate the content of the given field`, async () => {
+      const retrievedText = await locator.inputValue();
+      await Verifier.stringEquals(retrievedText,text);
+    });
+  }
+
   async navigateToUrl(url: string) {
     await test.step(`Navigating to URL: ${url}`, async () => {
       await this.page.goto(url);
@@ -77,5 +84,9 @@ export class ActionUtil {
       );
       await Verifier.verifyInputFieldHasValue(inputFieldLocator, selectText);
     });
+  }
+
+  async waitForPageToLoad(){
+    await this.page.waitForLoadState('networkidle');
   }
 }

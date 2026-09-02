@@ -44,6 +44,12 @@ export class Verifier {
     });
   }
 
+  static async stringEquals(firstString: string, secondString: string){
+    await test.step(`Checking ${firstString} is equal to ${secondString}`, async () => {
+      expect(firstString).toEqual(secondString);
+    });
+  }
+
   static async stringTypeArrayEquals(
     firstStringTypeArray: string[],
     secondStringTypeArray: string[],

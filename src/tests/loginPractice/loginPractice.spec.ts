@@ -1,6 +1,5 @@
 import { test } from "../../fixtures/fixture";
 import { ShoppingPage } from "../../pages/shoppingPage";
-import { LoginPage } from "../../pages/loginPage";
 
 test.describe(`Test scenarios on Login Practice Page`, () => {
   test(

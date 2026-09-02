@@ -11,33 +11,43 @@ dotenv.config({
 });
 
 export class ClientLoginCartPage {
-  readonly loginUrl: string = process.env.baseUrl!;
+  readonly page: Page;
+  readonly baseurl: string;
+  readonly cartPageUrl: string = process.env.cartPage!;
+  readonly loginPageUrl: string = process.env.clientLoginPage!;
   readonly actions: ActionUtil;
   readonly cartItemNames: Locator;
   readonly signOutButton: Locator;
-  readonly clienLoginPage: ClientLoginPage;
+  readonly selectedProduct: (productName: string) =>  Locator;
+  readonly selectedDeleteButton: (productName: string) => Locator;
 
-  constructor(readonly page: Page) {
-    this.actions = new ActionUtil(page);
-    this.cartItemNames = page.locator('[class="cartSection"] h3');
-    this.signOutButton = page.getByRole("button", { name: " Sign Out" });
-    this.clienLoginPage = new ClientLoginPage(page);
+  constructor(readonly url: string, readonly gotPage: Page) {
+    this.baseurl = url;
+    this.page = gotPage;
+    this.actions = new ActionUtil(this.page);
+    this.cartItemNames = this.page.locator('[class="cartSection"] h3');
+    this.signOutButton = this.page.getByRole("button", { name: " Sign Out" });
+    this.selectedProduct = (productName: string) => this.page.locator('[class="infoWrap"]').filter({ has: this.page.locator('h3').getByText(productName)});
+    this.selectedDeleteButton = (productName: string) => this.selectedProduct(productName).locator('[class="btn btn-danger"]');
+  }
+  
+  async navigateToCartPage(){
+    await this.actions.navigateToUrl(this.baseurl + this.cartPageUrl);
+    await this.page.waitForLoadState('networkidle');
   }
 
-  async navigateToPageWithToken(token: string) {
+  async navigateToCartPageWithToken(token: string) {
     await this.page.addInitScript((value) => {
       window.localStorage.setItem("token", value);
     }, token);
-
-    await this.actions.navigateToUrl(
-      this.loginUrl + "/client/#/dashboard/cart",
-    );
+    await this.actions.navigateToUrl(this.baseurl + this.cartPageUrl);
   }
 
   async ClickOnSignOutButton() {
     await test.step(`Logout of the shopping page`, async () => {
       await this.actions.clickElement(this.signOutButton);
-      await this.clienLoginPage.verifyPageIsLoaded();
+      const clienLoginPage: ClientLoginPage = new ClientLoginPage(this.baseurl + this.loginPageUrl, this.page);
+      await clienLoginPage.verifyPageIsLoaded();
     });
   }
 
@@ -48,5 +58,11 @@ export class ClientLoginCartPage {
       console.log(productNamesRetrived);
       await Verifier.stringTypeArrayEquals(productNames, productNamesRetrived);
     });
+  }
+
+  async clickOnDeleteButton(procuctNames: string[]){
+    for(const product of procuctNames){
+      await this.actions.clickElement(this.selectedDeleteButton(product));
+    }
   }
 }
