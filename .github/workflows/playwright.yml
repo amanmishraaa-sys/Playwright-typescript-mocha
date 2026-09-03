@@ -56,6 +56,13 @@ jobs:
     - uses: actions/setup-node@v5
       with:
         node-version: lts/*
+    
+      env:
+        BROWSER: ${{ inputs.browser || 'all' }}
+        TEST_PATH: ${{ inputs.test_path || 'all' }}
+        WORKERS: ${{ inputs.workers || '6' }}
+        GREP: ${{ inputs.grep || '' }}
+        RETRIES: ${{ inputs.retries || '1' }}
 
     - name: Install dependencies
       run: npm ci
@@ -63,10 +70,10 @@ jobs:
     - name: Install the required Playwright Browser
       shell: bash
       run: |
-        if [ "${{ inputs.browser }}" = "all" ]; then
+        if [ "$BROWSER" = "all" ]; then
           npx playwright install --with-deps
         else
-          npx playwright install ${{ inputs.browser }} --with-deps
+          npx playwright install "$BROWSER" --with-deps
         fi
 
     - name: Run Playwright tests
@@ -75,23 +82,23 @@ jobs:
         $testCommand = "npx playwright test"
 
         # Test Directory selection
-        if ("${{ inputs.test_path }}" -ne "all"){
-          $testCommand += " `"${{ inputs.test_path }}`""
+        if ($env.TEST_PATH -ne "all"){
+          $testCommand += " `"$env.TEST_PATH`""
         }
 
         # Browser selection
-        if ("${{ inputs.browser }}" -ne "all") {
-          $testCommand += " --project=`"${{ inputs.browser }}`""
+        if ($env.BROWSER -ne "all") {
+          $testCommand += " --project=`"$env.BROWSER`""
         }
 
         # Tag selection
-        if ("${{ inputs.grep }}" -ne "") {
-          $testCommand += " --grep=`"${{ inputs.grep }}`""
+        if ($env.GREP -ne "") {
+          $testCommand += " --grep=`"$env.GREP`""
         }
 
         # Workers and retries
-        $testCommand += " --workers=`"${{ inputs.workers }}`""
-        $testCommand += " --retries=`"${{ inputs.retries }}`""
+        $testCommand += " --workers=`"$env.WORKERS`""
+        $testCommand += " --retries=`"$env.RETRIES`""
 
         Write-Host "Executing: $testCommand"
         Invoke-Expression $testCommand
