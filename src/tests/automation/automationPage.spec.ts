@@ -17,4 +17,8 @@ test.describe(`Test scenarios on Automation Page`, () => {
     const targetText: string = "United States (USA)";
     await automationPage.selectGivenTextInSuggesstionBox(typeText, targetText);
   });
+
+  test(`Click on All Access Plan link in frame`, async({automationPage}) => {
+    await automationPage.clickAllAccessPlanInFrame();
+  })
 });

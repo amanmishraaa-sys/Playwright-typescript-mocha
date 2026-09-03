@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { ActionUtil } from "../utils/actionUtil";
 import { Verifier } from "../utils/verifier";
+import { FrameLocator } from "@playwright/test";
 
 dotenv.config({ path: path.resolve(__dirname, "../../testcases.env") });
 
@@ -13,6 +14,10 @@ export class AutomationPage {
   readonly alertButton: Locator;
   readonly suggesttionBox: Locator;
   readonly suggesttionBoxDropdown: Locator;
+  readonly frame: FrameLocator;
+  readonly frameHome: Locator;
+  readonly frameAllAccessPlan: Locator;
+  readonly frameHeadingAllAccessSubscription: Locator;
 
   constructor(
     readonly url: string,
@@ -23,6 +28,10 @@ export class AutomationPage {
     this.alertButton = page.locator("#confirmbtn");
     this.suggesttionBox = page.locator("#autocomplete");
     this.suggesttionBoxDropdown = page.locator("li");
+    this.frame = page.frameLocator("#courses-iframe");
+    this.frameHome = this.frame.locator("a").filter({ hasText: "Home" });
+    this.frameAllAccessPlan = this.frame.getByRole('link', { name: 'All Access Plan' });
+    this.frameHeadingAllAccessSubscription = this.frame.getByRole('heading', { name: 'All Access Subscription' });
   }
 
   async navigateToAutomationPage() {
@@ -46,7 +55,6 @@ export class AutomationPage {
       await dialog.accept();
     });
     await this.actions.clickElement(this.alertButton);
-    await this.page.waitForTimeout(5000);
   }
 
   async selectGivenTextInSuggesstionBox(typeText: string, targetText: string) {
@@ -56,5 +64,12 @@ export class AutomationPage {
       this.suggesttionBoxDropdown,
       targetText,
     );
+  }
+
+  async clickAllAccessPlanInFrame() {
+    await test.step(`Clicking on All Access Plan link in frame`, async() => {
+      await this.actions.clickElement(this.frameAllAccessPlan);
+      await Verifier.isVisible(this.frameHeadingAllAccessSubscription);
+    });
   }
 }
