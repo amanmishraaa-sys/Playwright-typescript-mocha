@@ -23,7 +23,10 @@ export class LoginPage {
   readonly incorrectCredsErrorMessage: Locator;
   readonly actions: ActionUtil;
 
-  constructor(readonly url: string, readonly page: Page) {
+  constructor(
+    readonly url: string,
+    readonly page: Page,
+  ) {
     this.baseurl = url;
     this.actions = new ActionUtil(page);
     this.usernameInput = page.locator("#username");
@@ -38,7 +41,7 @@ export class LoginPage {
     await test.step(`Login in confirmed`, async () => {
       await Verifier.pageHasUrl(
         this.page,
-        this.baseurl + this.angularPracticeUrl
+        this.baseurl + this.angularPracticeUrl,
       );
       await Verifier.pageHasTitle(this.page, "ProtoCommerce");
     });

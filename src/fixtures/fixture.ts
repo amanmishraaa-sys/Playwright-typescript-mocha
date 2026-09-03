@@ -18,7 +18,6 @@ dotenv.config({
 
 const baseurl: string = process.env.baseUrl!;
 
-
 type Fixtures = {
   afterLoginPage: LoginPage;
   beforeLoginPage: LoginPage;
@@ -64,13 +63,13 @@ export const test = base.extend<Fixtures>({
     use(clientLoginCartPage);
     await clientLoginCartPage.ClickOnSignOutButton();
   },
-  clientLoginShoppingPageWithToken: async({ page }, use) => {
+  clientLoginShoppingPageWithToken: async ({ page }, use) => {
     const token = await fs.readFile("token.txt", "utf-8");
     const clientLoginShoppingPage = new ClientLoginShoppingPage(baseurl, page);
     await clientLoginShoppingPage.navigateToShoppingPageWithToken(token);
     use(clientLoginShoppingPage);
   },
-  clientLoginPage: async({ page }, use) => {
+  clientLoginPage: async ({ page }, use) => {
     const clientLoginPage = new ClientLoginPage(baseurl, page);
     await clientLoginPage.navigateToPage();
     use(clientLoginPage);

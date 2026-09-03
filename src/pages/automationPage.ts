@@ -14,7 +14,10 @@ export class AutomationPage {
   readonly suggesttionBox: Locator;
   readonly suggesttionBoxDropdown: Locator;
 
-  constructor(readonly url: string, readonly page: Page) {
+  constructor(
+    readonly url: string,
+    readonly page: Page,
+  ) {
     this.baseurl = url;
     this.actions = new ActionUtil(this.page);
     this.alertButton = page.locator("#confirmbtn");
@@ -27,18 +30,21 @@ export class AutomationPage {
     await this.verifyPageIsLoaded();
   }
 
-  async verifyPageIsLoaded(){
+  async verifyPageIsLoaded() {
     await test.step(`Waiting for Automation page to load`, async () => {
-      await Verifier.pageHasUrl(this.page,this.baseurl + this.automationPageUrl);
+      await Verifier.pageHasUrl(
+        this.page,
+        this.baseurl + this.automationPageUrl,
+      );
       await Verifier.pageHasTitle(this.page, "Practice Page");
-      await this.page.waitForLoadState('networkidle');
+      await this.page.waitForLoadState("networkidle");
     });
   }
 
   async checkAndAcceptAlert() {
-    this.page.once("dialog", async(dialog) => {
-        await dialog.accept();
-      });
+    this.page.once("dialog", async (dialog) => {
+      await dialog.accept();
+    });
     await this.actions.clickElement(this.alertButton);
     await this.page.waitForTimeout(5000);
   }

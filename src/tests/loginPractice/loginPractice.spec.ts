@@ -1,10 +1,11 @@
 import { test } from "../../fixtures/fixture";
 import { ShoppingPage } from "../../pages/shoppingPage";
+import { Features, TestType } from "../../constants/tags";
 
 test.describe(`Test scenarios on Login Practice Page`, () => {
   test(
     "Verify that checkout button has number of items added for shopping at all times",
-    { tag: ["@cart", "@smoke"] },
+    { tag: [Features.Cart, TestType.Smoke] },
     async ({ afterLoginPage }) => {
       const shopppingPage: ShoppingPage = new ShoppingPage(afterLoginPage.page);
       await shopppingPage.clickOnAddButtonForAnItemWithName("iphone X");
@@ -20,7 +21,7 @@ test.describe(`Test scenarios on Login Practice Page`, () => {
 
   test(
     "Verify the incorrect password error message on entering wrong credentials ",
-    { tag: ["@login", "@smoke"] },
+    { tag: [Features.Login, TestType.Smoke] },
     async ({ beforeLoginPage }) => {
       await beforeLoginPage.enterUsername("something");
       await beforeLoginPage.enterPassword("WOW");
@@ -32,7 +33,7 @@ test.describe(`Test scenarios on Login Practice Page`, () => {
 
   test(
     "Verify that new page is opened when access first link on login page",
-    { tag: ["@newLink", "@smoke"] },
+    { tag: [Features.NewLink, TestType.Smoke] },
     async ({ beforeLoginPage }) => {
       await beforeLoginPage.verifyNewTabOpeningOnClickingDifferentlinks(
         "Free Access to InterviewQues/ResumeAssistance/Material",

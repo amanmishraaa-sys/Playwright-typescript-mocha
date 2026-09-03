@@ -1,9 +1,10 @@
 import { test } from "../../fixtures/fixture";
+import { TestType } from "../../constants/tags";
 
 test.describe(`Test scenarios on Automation Page`, () => {
   test(
     "Verify alert popup accepting scenario",
-    { tag: ["@smoke"] },
+    { tag: [TestType.Smoke] },
     async ({ automationPage }) => {
       await automationPage.checkAndAcceptAlert();
     },

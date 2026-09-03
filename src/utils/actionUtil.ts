@@ -18,10 +18,10 @@ export class ActionUtil {
     });
   }
 
-  async validateFieldContent(locator: Locator, text: string){
+  async validateFieldContent(locator: Locator, text: string) {
     await test.step(`Validate the content of the given field`, async () => {
       const retrievedText = await locator.inputValue();
-      await Verifier.stringEquals(retrievedText,text);
+      await Verifier.stringEquals(retrievedText, text);
     });
   }
 
@@ -86,7 +86,7 @@ export class ActionUtil {
     });
   }
 
-  async waitForPageToLoad(){
-    await this.page.waitForLoadState('networkidle');
+  async waitForPageToLoad() {
+    await this.page.waitForLoadState("networkidle");
   }
 }

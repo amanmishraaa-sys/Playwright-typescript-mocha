@@ -1,7 +1,6 @@
 import { APIUtil } from "../apiUtils/apiUtil";
 import dotenv from "dotenv";
 import path from "path";
-import { NewContextFactory } from "../newContextFactory/newContextFactory";
 import { endpoints } from "../endpoints/endpoints";
 import { APIRequestContext, APIResponse } from "@playwright/test";
 import { apiPayLoad } from "./apiPayLoad";
@@ -52,7 +51,6 @@ export class Api {
     Api.token = token;
     Api.userId = userId;
     await fs.writeFile("token.txt", Api.token);
-    console.log("Token: " + token);
   }
 
   async logoutAPI() {}

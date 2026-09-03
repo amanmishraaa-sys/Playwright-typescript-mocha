@@ -18,22 +18,29 @@ export class ClientLoginCartPage {
   readonly actions: ActionUtil;
   readonly cartItemNames: Locator;
   readonly signOutButton: Locator;
-  readonly selectedProduct: (productName: string) =>  Locator;
+  readonly selectedProduct: (productName: string) => Locator;
   readonly selectedDeleteButton: (productName: string) => Locator;
 
-  constructor(readonly url: string, readonly gotPage: Page) {
+  constructor(
+    readonly url: string,
+    readonly gotPage: Page,
+  ) {
     this.baseurl = url;
     this.page = gotPage;
     this.actions = new ActionUtil(this.page);
     this.cartItemNames = this.page.locator('[class="cartSection"] h3');
     this.signOutButton = this.page.getByRole("button", { name: " Sign Out" });
-    this.selectedProduct = (productName: string) => this.page.locator('[class="infoWrap"]').filter({ has: this.page.locator('h3').getByText(productName)});
-    this.selectedDeleteButton = (productName: string) => this.selectedProduct(productName).locator('[class="btn btn-danger"]');
+    this.selectedProduct = (productName: string) =>
+      this.page
+        .locator('[class="infoWrap"]')
+        .filter({ has: this.page.locator("h3").getByText(productName) });
+    this.selectedDeleteButton = (productName: string) =>
+      this.selectedProduct(productName).locator('[class="btn btn-danger"]');
   }
-  
-  async navigateToCartPage(){
+
+  async navigateToCartPage() {
     await this.actions.navigateToUrl(this.baseurl + this.cartPageUrl);
-    await this.page.waitForLoadState('networkidle');
+    await this.page.waitForLoadState("networkidle");
   }
 
   async navigateToCartPageWithToken(token: string) {
@@ -46,7 +53,10 @@ export class ClientLoginCartPage {
   async ClickOnSignOutButton() {
     await test.step(`Logout of the shopping page`, async () => {
       await this.actions.clickElement(this.signOutButton);
-      const clienLoginPage: ClientLoginPage = new ClientLoginPage(this.baseurl + this.loginPageUrl, this.page);
+      const clienLoginPage: ClientLoginPage = new ClientLoginPage(
+        this.baseurl + this.loginPageUrl,
+        this.page,
+      );
       await clienLoginPage.verifyPageIsLoaded();
     });
   }
@@ -60,8 +70,8 @@ export class ClientLoginCartPage {
     });
   }
 
-  async clickOnDeleteButton(procuctNames: string[]){
-    for(const product of procuctNames){
+  async clickOnDeleteButton(procuctNames: string[]) {
+    for (const product of procuctNames) {
       await this.actions.clickElement(this.selectedDeleteButton(product));
     }
   }
