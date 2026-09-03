@@ -83,16 +83,10 @@ jobs:
         if ("${{ inputs.browser }}" -ne "all") {
           $testCommand += " --project=`"${{ inputs.browser }}`""
         }
-        else {
-          $testCommand
-        }
 
         # Tag selection
         if ("${{ inputs.grep }}" -ne "") {
           $testCommand += " --grep=`"${{ inputs.grep }}`""
-        }
-        else {
-          $testCommand
         }
 
         # Workers and retries
