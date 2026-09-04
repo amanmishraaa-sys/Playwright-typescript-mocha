@@ -30,8 +30,12 @@ export class AutomationPage {
     this.suggesttionBoxDropdown = page.locator("li");
     this.frame = page.frameLocator("#courses-iframe");
     this.frameHome = this.frame.locator("a").filter({ hasText: "Home" });
-    this.frameAllAccessPlan = this.frame.getByRole('link', { name: 'All Access Plan' });
-    this.frameHeadingAllAccessSubscription = this.frame.getByRole('heading', { name: 'All Access Subscription' });
+    this.frameAllAccessPlan = this.frame.getByRole("link", {
+      name: "All Access Plan",
+    });
+    this.frameHeadingAllAccessSubscription = this.frame.getByRole("heading", {
+      name: "All Access Subscription",
+    });
   }
 
   async navigateToAutomationPage() {
@@ -67,7 +71,7 @@ export class AutomationPage {
   }
 
   async clickAllAccessPlanInFrame() {
-    await test.step(`Clicking on All Access Plan link in frame`, async() => {
+    await test.step(`Clicking on All Access Plan link in frame`, async () => {
       await this.actions.clickElement(this.frameAllAccessPlan);
       await Verifier.isVisible(this.frameHeadingAllAccessSubscription);
     });

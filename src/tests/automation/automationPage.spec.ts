@@ -18,7 +18,7 @@ test.describe(`Test scenarios on Automation Page`, () => {
     await automationPage.selectGivenTextInSuggesstionBox(typeText, targetText);
   });
 
-  test(`Click on All Access Plan link in frame`, async({automationPage}) => {
+  test(`Click on All Access Plan link in frame`, async ({ automationPage }) => {
     await automationPage.clickAllAccessPlanInFrame();
-  })
+  });
 });
