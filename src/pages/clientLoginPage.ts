@@ -16,6 +16,9 @@ export class ClientLoginPage {
   readonly titleOfThePage: Locator;
   readonly usernameField: Locator;
   readonly passwordField: Locator;
+  readonly loginButton: Locator;
+  readonly wrongPasswordErrorMessage: Locator;
+  readonly invalidEmailErrorMessage: Locator;
 
   constructor(
     readonly url: string,
@@ -28,6 +31,11 @@ export class ClientLoginPage {
       .filter({ hasText: "Practice Website for " });
     this.usernameField = this.page.locator("#userEmail");
     this.passwordField = this.page.locator("#userPassword");
+    this.loginButton = this.page.locator('#login');
+    this.wrongPasswordErrorMessage = this.page.getByRole('alert').filter({ hasText: ' Incorrect email or password. '});
+    this.invalidEmailErrorMessage = this.page
+      .locator(".invalid-feedback")
+      .filter({ hasText: "*Enter Valid Email" });
   }
 
   async navigateToPage() {
@@ -55,5 +63,17 @@ export class ClientLoginPage {
 
   async verifyPasswordTextInput(text: string) {
     await this.actions.validateFieldContent(this.passwordField, text);
+  }
+
+  async clickOnLoginButton(){
+    await this.actions.clickElement(this.loginButton);
+  }
+
+  async verifyVisibilityOfWrongErrorMessage() {
+    await Verifier.isVisible(this.wrongPasswordErrorMessage);
+  }
+
+  async verifyVisibilityOfInvalidEmailErrorMessage() {
+    await Verifier.isVisible(this.invalidEmailErrorMessage);
   }
 }
