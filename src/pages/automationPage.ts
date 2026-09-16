@@ -9,7 +9,6 @@ dotenv.config({ path: path.resolve(__dirname, "../../testcases.env") });
 
 export class AutomationPage {
   readonly actions: ActionUtil;
-  readonly baseurl: string;
   readonly automationPageUrl: string = process.env.automationPage!;
   readonly alertButton: Locator;
   readonly suggesttionBox: Locator;
@@ -20,10 +19,9 @@ export class AutomationPage {
   readonly frameHeadingAllAccessSubscription: Locator;
 
   constructor(
-    readonly url: string,
+    readonly baseurl: string,
     readonly page: Page,
   ) {
-    this.baseurl = url;
     this.actions = new ActionUtil(this.page);
     this.alertButton = page.locator("#confirmbtn");
     this.suggesttionBox = page.locator("#autocomplete");

@@ -20,8 +20,7 @@ export class ClientLoginShoppingPage {
     readonly page: Page,
   ) {
     this.baseurl = url;
-    this.page = page;
-    this.actions = new ActionUtil(this.page);
+    this.actions = new ActionUtil(page);
     this.selectedAddToCartBody = (productName: string) =>
       this.page.locator('[class="card-body"]').filter({ hasText: productName });
     this.selectedAddToCartButton = (productName: string) =>

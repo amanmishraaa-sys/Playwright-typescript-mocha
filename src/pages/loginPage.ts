@@ -17,17 +17,15 @@ export class LoginPage {
   readonly password: string = process.env.password!;
   readonly angularPracticeUrl: string = process.env.angularPractice!;
   readonly loginPageUrl: string = process.env.loginPage!;
-  readonly baseurl: string;
   readonly blinkingTexts: Locator;
   readonly termsAndConditionsCheckbox: Locator;
   readonly incorrectCredsErrorMessage: Locator;
   readonly actions: ActionUtil;
 
   constructor(
-    readonly url: string,
+    readonly baseurl: string,
     readonly page: Page,
   ) {
-    this.baseurl = url;
     this.actions = new ActionUtil(page);
     this.usernameInput = page.locator("#username");
     this.passwordInput = page.locator("#password");

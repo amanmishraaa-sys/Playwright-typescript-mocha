@@ -10,7 +10,6 @@ dotenv.config({
 });
 
 export class ClientLoginPage {
-  readonly baseurl: string;
   readonly loginPageUrl: string = process.env.clientLoginPage!;
   readonly actions: ActionUtil;
   readonly titleOfThePage: Locator;
@@ -21,10 +20,9 @@ export class ClientLoginPage {
   readonly invalidEmailErrorMessage: Locator;
 
   constructor(
-    readonly url: string,
+    readonly baseurl: string,
     readonly page: Page,
   ) {
-    this.baseurl = url;
     this.actions = new ActionUtil(page);
     this.titleOfThePage = page
       .locator("h1")

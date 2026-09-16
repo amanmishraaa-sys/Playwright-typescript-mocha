@@ -11,8 +11,6 @@ dotenv.config({
 });
 
 export class ClientLoginCartPage {
-  readonly page: Page;
-  readonly baseurl: string;
   readonly cartPageUrl: string = process.env.cartPage!;
   readonly loginPageUrl: string = process.env.clientLoginPage!;
   readonly actions: ActionUtil;
@@ -22,11 +20,9 @@ export class ClientLoginCartPage {
   readonly selectedDeleteButton: (productName: string) => Locator;
 
   constructor(
-    readonly url: string,
-    readonly gotPage: Page,
+    readonly baseurl: string,
+    readonly page: Page,
   ) {
-    this.baseurl = url;
-    this.page = gotPage;
     this.actions = new ActionUtil(this.page);
     this.cartItemNames = this.page.locator('[class="cartSection"] h3');
     this.signOutButton = this.page.getByRole("button", { name: " Sign Out" });

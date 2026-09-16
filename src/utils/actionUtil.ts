@@ -49,9 +49,9 @@ export class ActionUtil {
     });
   }
 
-  async getFieldContent(locator: Locator) {
-    await test.step(`Get contents of the field with locator: ${locator}`, async () => {
-      await locator.textContent();
+  async getFieldContent(locator: Locator): Promise<string> {
+    return await test.step(`Get contents of the field with locator: ${locator}`, async () => {
+      return (await locator.textContent()) ?? "";   
     });
   }
 
