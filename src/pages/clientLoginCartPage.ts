@@ -1,7 +1,8 @@
 import dotenv from "dotenv";
 import path from "path";
 import { Page, Locator, test } from "@playwright/test";
-import { ActionUtil } from "../utils/actionUtil";
+import { pageActionUtil } from "../utils/pageActionUtils";
+import { pageNavigationUtil } from "../utils/pageNavigationUtils";
 import { Verifier } from "../utils/verifier";
 import { ClientLoginPage } from "./clientLoginPage";
 
@@ -13,7 +14,8 @@ dotenv.config({
 export class ClientLoginCartPage {
   readonly cartPageUrl: string = process.env.cartPage!;
   readonly loginPageUrl: string = process.env.clientLoginPage!;
-  readonly actions: ActionUtil;
+  readonly pageActionUtil: pageActionUtil;
+  readonly pageNavigationUtil: pageNavigationUtil;
   readonly cartItemNames: Locator;
   readonly signOutButton: Locator;
   readonly selectedProduct: (productName: string) => Locator;
@@ -23,7 +25,8 @@ export class ClientLoginCartPage {
     readonly baseurl: string,
     readonly page: Page,
   ) {
-    this.actions = new ActionUtil(this.page);
+    this.pageActionUtil = new pageActionUtil(this.page);
+    this.pageNavigationUtil = new pageNavigationUtil(this.page);
     this.cartItemNames = this.page.locator('[class="cartSection"] h3');
     this.signOutButton = this.page.getByRole("button", { name: " Sign Out" });
     this.selectedProduct = (productName: string) =>
@@ -35,7 +38,7 @@ export class ClientLoginCartPage {
   }
 
   async navigateToCartPage() {
-    await this.actions.navigateToUrl(this.baseurl + this.cartPageUrl);
+    await this.pageNavigationUtil.navigateToUrl(this.baseurl + this.cartPageUrl);
     await this.page.waitForLoadState("networkidle");
   }
 
@@ -43,12 +46,12 @@ export class ClientLoginCartPage {
     await this.page.addInitScript((value) => {
       window.localStorage.setItem("token", value);
     }, token);
-    await this.actions.navigateToUrl(this.baseurl + this.cartPageUrl);
+    await this.pageNavigationUtil.navigateToUrl(this.baseurl + this.cartPageUrl);
   }
 
   async ClickOnSignOutButton() {
     await test.step(`Logout of the shopping page`, async () => {
-      await this.actions.clickElement(this.signOutButton);
+      await this.pageActionUtil.clickElement(this.signOutButton);
       const clienLoginPage: ClientLoginPage = new ClientLoginPage(
         this.baseurl + this.loginPageUrl,
         this.page,
@@ -68,7 +71,7 @@ export class ClientLoginCartPage {
 
   async clickOnDeleteButton(procuctNames: string[]) {
     for (const product of procuctNames) {
-      await this.actions.clickElement(this.selectedDeleteButton(product));
+      await this.pageActionUtil.clickElement(this.selectedDeleteButton(product));
     }
   }
 }

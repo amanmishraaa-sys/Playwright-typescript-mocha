@@ -1,9 +1,9 @@
 import { Page, Locator, test } from "@playwright/test";
 import { Verifier } from "./verifier";
 
-export class ActionUtil {
+export class pageActionUtil {
+
   constructor(readonly page: Page) {
-    this.page = page;
   }
 
   async clickElement(locator: Locator) {
@@ -22,12 +22,6 @@ export class ActionUtil {
     await test.step(`Validate the content of the given field`, async () => {
       const retrievedText = await locator.inputValue();
       await Verifier.stringEquals(retrievedText, text);
-    });
-  }
-
-  async navigateToUrl(url: string) {
-    await test.step(`Navigating to URL: ${url}`, async () => {
-      await this.page.goto(url);
     });
   }
 

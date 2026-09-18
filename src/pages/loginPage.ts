@@ -2,7 +2,8 @@ import { Page, Locator, expect, test } from "@playwright/test";
 import { Verifier } from "../utils/verifier";
 import dotenv from "dotenv";
 import path from "path";
-import { ActionUtil } from "../utils/actionUtil";
+import { pageActionUtil } from "../utils/pageActionUtils";
+import { pageNavigationUtil } from "../utils/pageNavigationUtils"
 
 dotenv.config({
   path: path.resolve(__dirname, "../../testcases.env"),
@@ -20,13 +21,15 @@ export class LoginPage {
   readonly blinkingTexts: Locator;
   readonly termsAndConditionsCheckbox: Locator;
   readonly incorrectCredsErrorMessage: Locator;
-  readonly actions: ActionUtil;
+  readonly pageActionUtil: pageActionUtil;
+  readonly pageNavigationUtil: pageNavigationUtil;
 
   constructor(
     readonly baseurl: string,
     readonly page: Page,
   ) {
-    this.actions = new ActionUtil(page);
+    this.pageActionUtil = new pageActionUtil(page);
+    this.pageNavigationUtil = new pageNavigationUtil(page);
     this.usernameInput = page.locator("#username");
     this.passwordInput = page.locator("#password");
     this.signInButton = page.getByRole("button", { name: "Sign In" });
@@ -48,7 +51,7 @@ export class LoginPage {
   async navigateToLoginPage() {
     const url: string = this.baseurl + this.loginPageUrl;
     await test.step(`Navigate to URL: ${url}`, async () => {
-      await this.actions.navigateToUrl(url);
+      await this.pageNavigationUtil.navigateToUrl(url);
     });
   }
 
@@ -66,21 +69,21 @@ export class LoginPage {
 
   async enterUsername(username: string) {
     await test.step(`Enter username as ${username}`, async () => {
-      await this.actions.clearField(this.usernameInput);
-      await this.actions.typeInInputField(this.usernameInput, username);
+      await this.pageActionUtil.clearField(this.usernameInput);
+      await this.pageActionUtil.typeInInputField(this.usernameInput, username);
     });
   }
 
   async enterPassword(password: string) {
     await test.step(`Enter password as ${password}`, async () => {
-      await this.actions.clearField(this.passwordInput);
-      await this.actions.typeInInputField(this.passwordInput, password);
+      await this.pageActionUtil.clearField(this.passwordInput);
+      await this.pageActionUtil.typeInInputField(this.passwordInput, password);
     });
   }
 
   async clickSignInButton() {
     await test.step(`Click on signin button`, async () => {
-      await this.actions.clickElement(this.signInButton);
+      await this.pageActionUtil.clickElement(this.signInButton);
     });
   }
 
@@ -93,7 +96,7 @@ export class LoginPage {
   async verifyNewTabOpeningOnClickingDifferentlinks(linkText: string) {
     const [newPage] = await Promise.all([
       this.page.context().waitForEvent("page"),
-      await this.actions.clickElement(
+      await this.pageActionUtil.clickElement(
         this.blinkingTexts.filter({ hasText: linkText }),
       ),
     ]);
@@ -103,8 +106,8 @@ export class LoginPage {
   }
 
   async checkTermsAndConditionCheckbox() {
-    !(await this.actions.isCheckboxChecked(this.termsAndConditionsCheckbox))
-      ? await this.actions.checkTheCheckbox(this.termsAndConditionsCheckbox)
+    !(await this.pageActionUtil.isCheckboxChecked(this.termsAndConditionsCheckbox))
+      ? await this.pageActionUtil.checkTheCheckbox(this.termsAndConditionsCheckbox)
       : console.log("Terms and Conditions already checked");
   }
 

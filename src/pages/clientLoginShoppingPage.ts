@@ -1,5 +1,6 @@
 import { Page, Locator } from "@playwright/test";
-import { ActionUtil } from "../utils/actionUtil";
+import { pageActionUtil } from "../utils/pageActionUtils";
+import { pageNavigationUtil } from "../utils/pageNavigationUtils"
 import dotenv from "dotenv";
 import path from "path";
 
@@ -11,7 +12,8 @@ dotenv.config({
 export class ClientLoginShoppingPage {
   readonly selectedAddToCartBody: (productName: string) => Locator;
   readonly selectedAddToCartButton: (productName: string) => Locator;
-  readonly actions: ActionUtil;
+  readonly pageActionUtil: pageActionUtil;
+  readonly pageNavigationUtil: pageNavigationUtil;
   readonly baseurl: string;
   readonly shoppingPageUrl: string = process.env.shoppingPage!;
 
@@ -20,7 +22,8 @@ export class ClientLoginShoppingPage {
     readonly page: Page,
   ) {
     this.baseurl = url;
-    this.actions = new ActionUtil(page);
+    this.pageActionUtil = new pageActionUtil(page);
+    this.pageNavigationUtil = new pageNavigationUtil(page);
     this.selectedAddToCartBody = (productName: string) =>
       this.page.locator('[class="card-body"]').filter({ hasText: productName });
     this.selectedAddToCartButton = (productName: string) =>
@@ -33,12 +36,12 @@ export class ClientLoginShoppingPage {
     await this.page.addInitScript((value) => {
       window.localStorage.setItem("token", value);
     }, token);
-    await this.actions.navigateToUrl(this.baseurl + this.shoppingPageUrl);
+    await this.pageNavigationUtil.navigateToUrl(this.baseurl + this.shoppingPageUrl);
   }
 
   async selectProducts(productNames: string[]) {
     for (const element of productNames) {
-      await this.actions.clickElement(this.selectedAddToCartButton(element));
+      await this.pageActionUtil.clickElement(this.selectedAddToCartButton(element));
     }
   }
 }

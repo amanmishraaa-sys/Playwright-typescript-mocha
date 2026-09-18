@@ -1,6 +1,7 @@
 import { Locator, Page, test } from "@playwright/test";
 import { Verifier } from "../utils/verifier";
-import { ActionUtil } from "../utils/actionUtil";
+import { pageActionUtil } from "../utils/pageActionUtils";
+import { pageNavigationUtil } from "../utils/pageNavigationUtils";
 import dotenv from "dotenv";
 import path from "path";
 
@@ -11,7 +12,8 @@ dotenv.config({
 
 export class ClientLoginPage {
   readonly loginPageUrl: string = process.env.clientLoginPage!;
-  readonly actions: ActionUtil;
+  readonly pageActionUtil: pageActionUtil;
+  readonly pageNavigationUtil: pageNavigationUtil;
   readonly titleOfThePage: Locator;
   readonly usernameField: Locator;
   readonly passwordField: Locator;
@@ -23,7 +25,8 @@ export class ClientLoginPage {
     readonly baseurl: string,
     readonly page: Page,
   ) {
-    this.actions = new ActionUtil(page);
+    this.pageActionUtil = new pageActionUtil(page);
+    this.pageNavigationUtil = new pageNavigationUtil(page);
     this.titleOfThePage = page
       .locator("h1")
       .filter({ hasText: "Practice Website for " });
@@ -37,8 +40,8 @@ export class ClientLoginPage {
   }
 
   async navigateToPage() {
-    await this.actions.navigateToUrl(this.baseurl + this.loginPageUrl);
-    await this.actions.waitForPageToLoad();
+    await this.pageNavigationUtil.navigateToUrl(this.baseurl + this.loginPageUrl);
+    await this.pageActionUtil.waitForPageToLoad();
   }
 
   async verifyPageIsLoaded() {
@@ -48,23 +51,23 @@ export class ClientLoginPage {
   }
 
   async enterUsername(text: string) {
-    await this.actions.typeInInputField(this.usernameField, text);
+    await this.pageActionUtil.typeInInputField(this.usernameField, text);
   }
 
   async verifyUsernameTextInput(text: string) {
-    await this.actions.validateFieldContent(this.usernameField, text);
+    await this.pageActionUtil.validateFieldContent(this.usernameField, text);
   }
 
   async enterPassword(text: string) {
-    await this.actions.typeInInputField(this.passwordField, text);
+    await this.pageActionUtil.typeInInputField(this.passwordField, text);
   }
 
   async verifyPasswordTextInput(text: string) {
-    await this.actions.validateFieldContent(this.passwordField, text);
+    await this.pageActionUtil.validateFieldContent(this.passwordField, text);
   }
 
   async clickOnLoginButton(){
-    await this.actions.clickElement(this.loginButton);
+    await this.pageActionUtil.clickElement(this.loginButton);
   }
 
   async verifyVisibilityOfWrongErrorMessage() {

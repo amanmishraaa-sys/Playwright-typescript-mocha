@@ -1,14 +1,16 @@
 import { Page, Locator, test } from "@playwright/test";
 import dotenv from "dotenv";
 import path from "path";
-import { ActionUtil } from "../utils/actionUtil";
+import { pageActionUtil } from "../utils/pageActionUtils";
+import { pageNavigationUtil } from "../utils/pageNavigationUtils"
 import { Verifier } from "../utils/verifier";
 import { FrameLocator } from "@playwright/test";
 
 dotenv.config({ path: path.resolve(__dirname, "../../testcases.env") });
 
 export class AutomationPage {
-  readonly actions: ActionUtil;
+  readonly pageActionUtil: pageActionUtil;
+  readonly pageNavigationUtil: pageNavigationUtil;
   readonly automationPageUrl: string = process.env.automationPage!;
   readonly alertButton: Locator;
   readonly suggesttionBox: Locator;
@@ -22,7 +24,8 @@ export class AutomationPage {
     readonly baseurl: string,
     readonly page: Page,
   ) {
-    this.actions = new ActionUtil(this.page);
+    this.pageActionUtil = new pageActionUtil(this.page);
+    this.pageNavigationUtil = new pageNavigationUtil(this.page);
     this.alertButton = page.locator("#confirmbtn");
     this.suggesttionBox = page.locator("#autocomplete");
     this.suggesttionBoxDropdown = page.locator("li");
@@ -37,7 +40,7 @@ export class AutomationPage {
   }
 
   async navigateToAutomationPage() {
-    await this.actions.navigateToUrl(this.baseurl + this.automationPageUrl);
+    await this.pageNavigationUtil.navigateToUrl(this.baseurl + this.automationPageUrl);
     await this.verifyPageIsLoaded();
   }
 
@@ -56,11 +59,11 @@ export class AutomationPage {
     this.page.once("dialog", async (dialog) => {
       await dialog.accept();
     });
-    await this.actions.clickElement(this.alertButton);
+    await this.pageActionUtil.clickElement(this.alertButton);
   }
 
   async selectGivenTextInSuggesstionBox(typeText: string, targetText: string) {
-    await this.actions.handleAutoSuggestionBox(
+    await this.pageActionUtil.handleAutoSuggestionBox(
       this.suggesttionBox,
       typeText,
       this.suggesttionBoxDropdown,
@@ -70,7 +73,7 @@ export class AutomationPage {
 
   async clickAllAccessPlanInFrame() {
     await test.step(`Clicking on All Access Plan link in frame`, async () => {
-      await this.actions.clickElement(this.frameAllAccessPlan);
+      await this.pageActionUtil.clickElement(this.frameAllAccessPlan);
       await Verifier.isVisible(this.frameHeadingAllAccessSubscription);
     });
   }
