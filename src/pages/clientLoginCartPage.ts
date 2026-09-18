@@ -43,10 +43,7 @@ export class ClientLoginCartPage {
   }
 
   async navigateToCartPageWithToken(token: string) {
-    await this.page.addInitScript((value) => {
-      window.localStorage.setItem("token", value);
-    }, token);
-    await this.pageNavigationUtil.navigateToUrl(this.baseurl + this.cartPageUrl);
+    await this.pageNavigationUtil.navigateToUrlWithPreLoadedToken(token,this.baseurl + this.cartPageUrl);
   }
 
   async ClickOnSignOutButton() {

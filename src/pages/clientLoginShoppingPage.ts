@@ -33,10 +33,7 @@ export class ClientLoginShoppingPage {
   }
 
   async navigateToShoppingPageWithToken(token: string) {
-    await this.page.addInitScript((value) => {
-      window.localStorage.setItem("token", value);
-    }, token);
-    await this.pageNavigationUtil.navigateToUrl(this.baseurl + this.shoppingPageUrl);
+    await this.pageNavigationUtil.navigateToUrlWithPreLoadedToken(token,this.baseurl + this.shoppingPageUrl);
   }
 
   async selectProducts(productNames: string[]) {
