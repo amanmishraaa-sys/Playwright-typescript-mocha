@@ -2,7 +2,7 @@ import { APIUtil } from "../apiUtils/apiUtil";
 import dotenv from "dotenv";
 import path from "path";
 import { endpoints } from "../endpoints/endpoints";
-import { APIRequestContext, APIResponse } from "@playwright/test";
+import { APIRequestContext } from "@playwright/test";
 import { apiPayLoad } from "./apiPayLoad";
 import {
   addProductToCartPayload,
@@ -50,7 +50,8 @@ export class Api {
     const userId: string = responsejson.userId;
     Api.token = token;
     Api.userId = userId;
-    await fs.writeFile("token.txt", Api.token);
+    await fs.writeFile("token.txt", "", "utf-8");
+    await fs.writeFile("token.txt", Api.token, "utf-8");
   }
 
   async logoutAPI() {}

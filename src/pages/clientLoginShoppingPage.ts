@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, APIRequestContext } from "@playwright/test";
 import { pageActionUtil } from "../utils/pageActionUtils";
 import { pageNavigationUtil } from "../utils/pageNavigationUtils"
 import dotenv from "dotenv";
@@ -16,6 +16,7 @@ export class ClientLoginShoppingPage {
   readonly pageNavigationUtil: pageNavigationUtil;
   readonly baseurl: string;
   readonly shoppingPageUrl: string = process.env.shoppingPage!;
+  readonly heading: Locator;
 
   constructor(
     readonly url: string,
@@ -25,11 +26,12 @@ export class ClientLoginShoppingPage {
     this.pageActionUtil = new pageActionUtil(page);
     this.pageNavigationUtil = new pageNavigationUtil(page);
     this.selectedAddToCartBody = (productName: string) =>
-      this.page.locator('[class="card-body"]').filter({ hasText: productName });
+    this.page.locator('[class="card-body"]').filter({ hasText: productName });
     this.selectedAddToCartButton = (productName: string) =>
-      this.selectedAddToCartBody(productName).getByRole("button", {
+    this.selectedAddToCartBody(productName).getByRole("button", {
         name: " Add To Cart",
       });
+    this.heading = this.page.getByRole('heading',{ name: "AUTOMATION"});
   }
 
   async navigateToShoppingPageWithToken(token: string) {
