@@ -4,6 +4,7 @@ import { pageActionUtil } from "../utils/pageActionUtils";
 import { pageNavigationUtil } from "../utils/pageNavigationUtils";
 import dotenv from "dotenv";
 import path from "path";
+import { UtilManager } from "../utils/utilManager";
 
 dotenv.config({
   path: path.resolve(__dirname, "../../testcases.env"),
@@ -12,8 +13,7 @@ dotenv.config({
 
 export class ClientLoginPage {
   readonly loginPageUrl: string = process.env.clientLoginPage!;
-  readonly pageActionUtil: pageActionUtil;
-  readonly pageNavigationUtil: pageNavigationUtil;
+  readonly utilManager: UtilManager;
   readonly titleOfThePage: Locator;
   readonly usernameField: Locator;
   readonly passwordField: Locator;
@@ -25,8 +25,7 @@ export class ClientLoginPage {
     readonly baseurl: string,
     readonly page: Page,
   ) {
-    this.pageActionUtil = new pageActionUtil(page);
-    this.pageNavigationUtil = new pageNavigationUtil(page);
+    this.utilManager = new UtilManager(this.page);
     this.titleOfThePage = page
       .locator("h1")
       .filter({ hasText: "Practice Website for " });
@@ -40,41 +39,41 @@ export class ClientLoginPage {
   }
 
   async navigateToPage() {
-    await this.pageNavigationUtil.navigateToUrl(this.baseurl + this.loginPageUrl);
-    await this.pageActionUtil.waitForPageToLoad();
+    await this.utilManager.pNUtil.navigateToUrl(this.baseurl + this.loginPageUrl);
+    await this.utilManager.pAUtil.waitForPageToLoad();
   }
 
   async verifyPageIsLoaded() {
     await test.step(`Verify that the client Login page is loaded`, async () => {
-      await Verifier.isVisible(this.titleOfThePage);
+      await this.utilManager.verifier.isVisible(this.titleOfThePage);
     });
   }
 
   async enterUsername(text: string) {
-    await this.pageActionUtil.typeInInputField(this.usernameField, text);
+    await this.utilManager.pAUtil.typeInInputField(this.usernameField, text);
   }
 
   async verifyUsernameTextInput(text: string) {
-    await this.pageActionUtil.validateFieldContent(this.usernameField, text);
+    await this.utilManager.pAUtil.validateFieldContent(this.usernameField, text);
   }
 
   async enterPassword(text: string) {
-    await this.pageActionUtil.typeInInputField(this.passwordField, text);
+    await this.utilManager.pAUtil.typeInInputField(this.passwordField, text);
   }
 
   async verifyPasswordTextInput(text: string) {
-    await this.pageActionUtil.validateFieldContent(this.passwordField, text);
+    await this.utilManager.pAUtil.validateFieldContent(this.passwordField, text);
   }
 
   async clickOnLoginButton(){
-    await this.pageActionUtil.clickElement(this.loginButton);
+    await this.utilManager.pAUtil.clickElement(this.loginButton);
   }
 
   async verifyVisibilityOfWrongErrorMessage() {
-    await Verifier.isVisible(this.wrongPasswordErrorMessage);
+    await this.utilManager.verifier.isVisible(this.wrongPasswordErrorMessage);
   }
 
   async verifyVisibilityOfInvalidEmailErrorMessage() {
-    await Verifier.isVisible(this.invalidEmailErrorMessage);
+    await this.utilManager.verifier.isVisible(this.invalidEmailErrorMessage);
   }
 }

@@ -3,7 +3,10 @@ import { Verifier } from "./verifier";
 
 export class pageActionUtil {
 
+  readonly verifier: Verifier;
+
   constructor(readonly page: Page) {
+    this.verifier = new Verifier();
   }
 
   async clickElement(locator: Locator) {
@@ -21,7 +24,7 @@ export class pageActionUtil {
   async validateFieldContent(locator: Locator, text: string) {
     await test.step(`Validate the content of the given field`, async () => {
       const retrievedText = await locator.inputValue();
-      await Verifier.stringEquals(retrievedText, text);
+      await this.verifier.stringEquals(retrievedText, text);
     });
   }
 
@@ -70,13 +73,13 @@ export class pageActionUtil {
   ) {
     await test.step(`Handling the suggesstion box`, async () => {
       await inputFieldLocator.fill(searchText);
-      await Verifier.isVisible(
+      await this.verifier.isVisible(
         sugesstionDropdownlocator.filter({ hasText: selectText }),
       );
       await this.clickElement(
         sugesstionDropdownlocator.filter({ hasText: selectText }),
       );
-      await Verifier.verifyInputFieldHasValue(inputFieldLocator, selectText);
+      await this.verifier.verifyInputFieldHasValue(inputFieldLocator, selectText);
     });
   }
 

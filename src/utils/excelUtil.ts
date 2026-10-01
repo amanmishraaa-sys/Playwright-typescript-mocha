@@ -1,7 +1,8 @@
 import * as ExcelJS from "exceljs";
 
 export class ExcelUtil {
-  static async findValueAndReplace(
+  constructor() {}
+  async findValueAndReplace(
     searchText: string,
     newValue: string,
     path: string,
@@ -35,7 +36,7 @@ export class ExcelUtil {
     );
   }
 
-  static async replaceValueAt(
+  async replaceValueAt(
     workbook: ExcelJS.Workbook,
     worksheet: ExcelJS.Worksheet,
     path: string,
@@ -48,7 +49,7 @@ export class ExcelUtil {
     await workbook.xlsx.writeFile(path);
   }
 
-  static async readFileToGetCoordinates(
+  async readFileToGetCoordinates(
     worksheet: ExcelJS.Worksheet,
     searchText: string,
   ): Promise<{ rowNumber: number; columnNumber: number }> {

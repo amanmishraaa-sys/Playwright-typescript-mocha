@@ -1,11 +1,7 @@
 import { Page, test, Locator } from "@playwright/test";
-import { FileUtils } from "../utils/fileUtils";
 import dotenv from "dotenv";
 import path from "path";
-import { ExcelUtil } from "../utils/excelUtil";
-import { Verifier } from "../utils/verifier";
-import { pageActionUtil } from "../utils/pageActionUtils";
-import { pageNavigationUtil } from "../utils/pageNavigationUtils";
+import { UtilManager } from "../utils/utilManager";
 
 dotenv.config({ path: path.resolve(__dirname, "../../testcases.env") });
 
@@ -15,24 +11,22 @@ const downloadPath = path.resolve(
 );
 
 export class UploadDownloadPage {
+  readonly utilManager: UtilManager;
   readonly choosFileButton: Locator;
   readonly loginUrl: string = process.env.baseUrl!;
   readonly downloadButton: Locator;
   readonly priceCellFirstRow: Locator;
-  readonly pageActionUtil: pageActionUtil;
-  readonly pageNavigationUtil: pageNavigationUtil;
 
   constructor(readonly page: Page) {
+    this.utilManager = new UtilManager(this.page);
     this.choosFileButton = page.locator("#fileinput");
     this.downloadButton = page.getByRole("button", { name: "Download" });
     this.priceCellFirstRow = page.locator("[id='row-0'] [data-column-id='4']");
-    this.pageActionUtil = new pageActionUtil(page);
-    this.pageNavigationUtil = new pageNavigationUtil(page);
   }
 
   async navigateToUploadDownloadPage() {
     await test.step(`Navigate to URL: ${this.loginUrl + "/upload-download-test/index.html"}`, async () => {
-      await this.pageNavigationUtil.navigateToUrl(
+      await this.utilManager.pNUtil.navigateToUrl(
         this.loginUrl + "/upload-download-test/index.html",
       );
     });
@@ -40,23 +34,23 @@ export class UploadDownloadPage {
 
   async uploadFile(filePath: string) {
     await test.step(`Upload the file`, async () => {
-      await this.pageActionUtil.uploadFile(this.choosFileButton, filePath);
+      await this.utilManager.pAUtil.uploadFile(this.choosFileButton, filePath);
     });
   }
 
   async clickOnDownloadButtonAndSaveFile() {
     await test.step(`Click on download button and saving the file to particular path`, async () => {
       const downloadPromise = this.page.waitForEvent("download");
-      await this.pageActionUtil.clickElement(this.downloadButton);
+      await this.utilManager.pAUtil.clickElement(this.downloadButton);
       const download = await downloadPromise;
       await download.saveAs(downloadPath);
-      await Verifier.givenPathExists(downloadPath);
+      await this.utilManager.verifier.givenPathExists(downloadPath);
     });
   }
 
   async deleteDownloadedFile() {
     await test.step(`Delete the downloaded file at this path: ${downloadPath}`, async () => {
-      await FileUtils.deleteFileIfExists(downloadPath);
+      await this.utilManager.fUtil.deleteFileIfExists(downloadPath);
     });
   }
 
@@ -65,7 +59,7 @@ export class UploadDownloadPage {
     replaceValue: string,
   ) {
     await test.step(`Change the value in downloaded file`, async () => {
-      await ExcelUtil.findValueAndReplace(
+      await this.utilManager.eUtil.findValueAndReplace(
         searchValue,
         replaceValue,
         downloadPath,
@@ -75,13 +69,13 @@ export class UploadDownloadPage {
 
   async uploadModifiedFile() {
     await test.step(`Upload the modified file`, async () => {
-      await this.pageActionUtil.uploadFile(this.choosFileButton, downloadPath);
+      await this.utilManager.pAUtil.uploadFile(this.choosFileButton, downloadPath);
     });
   }
 
   async verifyTheChangesOnThePage() {
     await test.step(`Verify the changes on the page after modified file has been uploaded`, async () => {
-      await Verifier.textForLocator(this.priceCellFirstRow, "350");
+      await this.utilManager.verifier.textForLocator(this.priceCellFirstRow, "350");
     });
   }
 }

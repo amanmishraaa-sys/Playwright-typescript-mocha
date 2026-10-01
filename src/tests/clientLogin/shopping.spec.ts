@@ -54,7 +54,7 @@ test.describe(`API Login and using token for further UI Test cases`, () => {
         "ZARA COAT 3",
         "iphone 13 pro",
       ]);
-      await clientLoginCartPage.pageActionUtil.refreshPage();
+      await clientLoginCartPage.utilManager.pAUtil.refreshPage();
     },
   );
 });

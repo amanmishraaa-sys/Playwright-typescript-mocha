@@ -1,16 +1,21 @@
 import { Page, test, expect, Locator } from "@playwright/test";
-import { FileUtils } from "./fileUtils";
+import { FileUtils } from "./fileUtils"
 
 export class Verifier {
-  constructor() {}
 
-  static async isVisible(locator: Locator, timeout?: number) {
+  readonly fUtil: FileUtils;
+
+  constructor() {
+    this.fUtil = new FileUtils();
+  }
+
+  async isVisible(locator: Locator, timeout?: number) {
     await test.step(`Verify if the element with locator: ${locator} is visible`, async () => {
       await expect(locator).toBeVisible({ timeout: timeout });
     });
   }
 
-  static async textForLocator(
+  async textForLocator(
     locator: Locator,
     expectedText: string,
     timeout?: number,
@@ -20,37 +25,37 @@ export class Verifier {
     });
   }
 
-  static async givenPathExists(path: string) {
+  async givenPathExists(path: string) {
     await test.step(`Verify if the given path: ${path} exists`, async () => {
-      expect(await FileUtils.pathExists(path)).toBeTruthy();
+      expect(await this.fUtil.pathExists(path)).toBeTruthy();
     });
   }
 
-  static async pageHasUrl(page: Page, url: string) {
+  async pageHasUrl(page: Page, url: string) {
     await test.step(`Verify that the page has URL: ${url}`, async () => {
       await expect(page).toHaveURL(url);
     });
   }
 
-  static async pageHasTitle(page: Page, title: string) {
+  async pageHasTitle(page: Page, title: string) {
     await test.step(`Verify that the page has title: ${title}`, async () => {
       await expect(page).toHaveTitle(title);
     });
   }
 
-  static async stringContains(firstString: string, secondString: string) {
+  async stringContains(firstString: string, secondString: string) {
     await test.step(`Verify that ${firstString} contains ${secondString}`, async () => {
       expect(firstString).toContain(secondString);
     });
   }
 
-  static async stringEquals(firstString: string, secondString: string) {
+  async stringEquals(firstString: string, secondString: string) {
     await test.step(`Checking ${firstString} is equal to ${secondString}`, async () => {
       expect(firstString).toEqual(secondString);
     });
   }
 
-  static async stringTypeArrayEquals(
+  async stringTypeArrayEquals(
     firstStringTypeArray: string[],
     secondStringTypeArray: string[],
   ) {
@@ -59,7 +64,7 @@ export class Verifier {
     });
   }
 
-  static async verifyInputFieldHasValue(locator: Locator, text: string) {
+  async verifyInputFieldHasValue(locator: Locator, text: string) {
     await test.step(`Verify that the inputfield with locator: ${locator} has ${text}`, async () => {
       await expect(locator).toHaveValue(text);
     });

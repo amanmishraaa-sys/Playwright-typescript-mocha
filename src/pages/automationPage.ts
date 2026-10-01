@@ -5,12 +5,12 @@ import { pageActionUtil } from "../utils/pageActionUtils";
 import { pageNavigationUtil } from "../utils/pageNavigationUtils"
 import { Verifier } from "../utils/verifier";
 import { FrameLocator } from "@playwright/test";
+import { UtilManager } from "../utils/utilManager";
 
 dotenv.config({ path: path.resolve(__dirname, "../../testcases.env") });
 
 export class AutomationPage {
-  readonly pageActionUtil: pageActionUtil;
-  readonly pageNavigationUtil: pageNavigationUtil;
+  readonly utilManager: UtilManager;
   readonly automationPageUrl: string = process.env.automationPage!;
   readonly alertButton: Locator;
   readonly suggesttionBox: Locator;
@@ -24,8 +24,7 @@ export class AutomationPage {
     readonly baseurl: string,
     readonly page: Page,
   ) {
-    this.pageActionUtil = new pageActionUtil(this.page);
-    this.pageNavigationUtil = new pageNavigationUtil(this.page);
+    this.utilManager = new UtilManager(this.page);
     this.alertButton = page.locator("#confirmbtn");
     this.suggesttionBox = page.locator("#autocomplete");
     this.suggesttionBoxDropdown = page.locator("li");
@@ -40,17 +39,17 @@ export class AutomationPage {
   }
 
   async navigateToAutomationPage() {
-    await this.pageNavigationUtil.navigateToUrl(this.baseurl + this.automationPageUrl);
+    await this.utilManager.pNUtil.navigateToUrl(this.baseurl + this.automationPageUrl);
     await this.verifyPageIsLoaded();
   }
 
   async verifyPageIsLoaded() {
     await test.step(`Waiting for Automation page to load`, async () => {
-      await Verifier.pageHasUrl(
+      await this.utilManager.verifier.pageHasUrl(
         this.page,
         this.baseurl + this.automationPageUrl,
       );
-      await Verifier.pageHasTitle(this.page, "Practice Page");
+      await this.utilManager.verifier.pageHasTitle(this.page, "Practice Page");
       await this.page.waitForLoadState("networkidle");
     });
   }
@@ -59,11 +58,11 @@ export class AutomationPage {
     this.page.once("dialog", async (dialog) => {
       await dialog.accept();
     });
-    await this.pageActionUtil.clickElement(this.alertButton);
+    await this.utilManager.pAUtil.clickElement(this.alertButton);
   }
 
   async selectGivenTextInSuggesstionBox(typeText: string, targetText: string) {
-    await this.pageActionUtil.handleAutoSuggestionBox(
+    await this.utilManager.pAUtil.handleAutoSuggestionBox(
       this.suggesttionBox,
       typeText,
       this.suggesttionBoxDropdown,
@@ -73,8 +72,8 @@ export class AutomationPage {
 
   async clickAllAccessPlanInFrame() {
     await test.step(`Clicking on All Access Plan link in frame`, async () => {
-      await this.pageActionUtil.clickElement(this.frameAllAccessPlan);
-      await Verifier.isVisible(this.frameHeadingAllAccessSubscription);
+      await this.utilManager.pAUtil.clickElement(this.frameAllAccessPlan);
+      await this.utilManager.verifier.isVisible(this.frameHeadingAllAccessSubscription);
     });
   }
 }

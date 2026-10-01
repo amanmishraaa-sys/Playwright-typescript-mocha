@@ -5,6 +5,7 @@ import { pageActionUtil } from "../utils/pageActionUtils";
 import { pageNavigationUtil } from "../utils/pageNavigationUtils";
 import { Verifier } from "../utils/verifier";
 import { ClientLoginPage } from "./clientLoginPage";
+import { UtilManager } from "../utils/utilManager";
 
 dotenv.config({
   path: path.resolve(__dirname, "../../testcases.env"),
@@ -12,10 +13,9 @@ dotenv.config({
 });
 
 export class ClientLoginCartPage {
+  readonly utilManager: UtilManager;
   readonly cartPageUrl: string = process.env.cartPage!;
   readonly loginPageUrl: string = process.env.clientLoginPage!;
-  readonly pageActionUtil: pageActionUtil;
-  readonly pageNavigationUtil: pageNavigationUtil;
   readonly cartItemNames: Locator;
   readonly signOutButton: Locator;
   readonly selectedProduct: (productName: string) => Locator;
@@ -25,8 +25,7 @@ export class ClientLoginCartPage {
     readonly baseurl: string,
     readonly page: Page,
   ) {
-    this.pageActionUtil = new pageActionUtil(this.page);
-    this.pageNavigationUtil = new pageNavigationUtil(this.page);
+    this.utilManager = new UtilManager(this.page);
     this.cartItemNames = this.page.locator('[class="cartSection"] h3');
     this.signOutButton = this.page.getByRole("button", { name: " Sign Out" });
     this.selectedProduct = (productName: string) =>
@@ -38,17 +37,17 @@ export class ClientLoginCartPage {
   }
 
   async navigateToCartPage() {
-    await this.pageNavigationUtil.navigateToUrl(this.baseurl + this.cartPageUrl);
+    await this.utilManager.pNUtil.navigateToUrl(this.baseurl + this.cartPageUrl);
     await this.page.waitForLoadState("networkidle");
   }
 
   async navigateToCartPageWithToken(token: string) {
-    await this.pageNavigationUtil.navigateToUrlWithPreLoadedToken(token,this.baseurl + this.cartPageUrl);
+    await this.utilManager.pNUtil.navigateToUrlWithPreLoadedToken(token,this.baseurl + this.cartPageUrl);
   }
 
   async ClickOnSignOutButton() {
     await test.step(`Logout of the shopping page`, async () => {
-      await this.pageActionUtil.clickElement(this.signOutButton);
+      await this.utilManager.pAUtil.clickElement(this.signOutButton);
       const clienLoginPage: ClientLoginPage = new ClientLoginPage(
         this.baseurl + this.loginPageUrl,
         this.page,
@@ -62,13 +61,13 @@ export class ClientLoginCartPage {
       const productNamesRetrived: string[] =
         await this.cartItemNames.allTextContents();
       console.log(productNamesRetrived);
-      await Verifier.stringTypeArrayEquals(productNames, productNamesRetrived);
+      await this.utilManager.verifier.stringTypeArrayEquals(productNames, productNamesRetrived);
     });
   }
 
   async clickOnDeleteButton(procuctNames: string[]) {
     for (const product of procuctNames) {
-      await this.pageActionUtil.clickElement(this.selectedDeleteButton(product));
+      await this.utilManager.pAUtil.clickElement(this.selectedDeleteButton(product));
     }
   }
 }
