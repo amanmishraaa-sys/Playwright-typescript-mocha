@@ -2,7 +2,7 @@ import { Page, Locator, test } from "@playwright/test";
 import dotenv from "dotenv";
 import path from "path";
 import { pageActionUtil } from "../utils/pageActionUtils";
-import { pageNavigationUtil } from "../utils/pageNavigationUtils"
+import { pageNavigationUtil } from "../utils/pageNavigationUtils";
 import { Verifier } from "../utils/verifier";
 import { FrameLocator } from "@playwright/test";
 import { UtilManager } from "../utils/utilManager";
@@ -39,7 +39,9 @@ export class AutomationPage {
   }
 
   async navigateToAutomationPage() {
-    await this.utilManager.pNUtil.navigateToUrl(this.baseurl + this.automationPageUrl);
+    await this.utilManager.pNUtil.navigateToUrl(
+      this.baseurl + this.automationPageUrl,
+    );
     await this.verifyPageIsLoaded();
   }
 
@@ -73,7 +75,9 @@ export class AutomationPage {
   async clickAllAccessPlanInFrame() {
     await test.step(`Clicking on All Access Plan link in frame`, async () => {
       await this.utilManager.pAUtil.clickElement(this.frameAllAccessPlan);
-      await this.utilManager.verifier.isVisible(this.frameHeadingAllAccessSubscription);
+      await this.utilManager.verifier.isVisible(
+        this.frameHeadingAllAccessSubscription,
+      );
     });
   }
 }

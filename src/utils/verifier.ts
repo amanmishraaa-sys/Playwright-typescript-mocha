@@ -1,8 +1,7 @@
 import { Page, test, expect, Locator } from "@playwright/test";
-import { FileUtils } from "./fileUtils"
+import { FileUtils } from "./fileUtils";
 
 export class Verifier {
-
   readonly fUtil: FileUtils;
 
   constructor() {

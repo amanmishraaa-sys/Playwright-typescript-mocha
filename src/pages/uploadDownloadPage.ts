@@ -69,13 +69,19 @@ export class UploadDownloadPage {
 
   async uploadModifiedFile() {
     await test.step(`Upload the modified file`, async () => {
-      await this.utilManager.pAUtil.uploadFile(this.choosFileButton, downloadPath);
+      await this.utilManager.pAUtil.uploadFile(
+        this.choosFileButton,
+        downloadPath,
+      );
     });
   }
 
   async verifyTheChangesOnThePage() {
     await test.step(`Verify the changes on the page after modified file has been uploaded`, async () => {
-      await this.utilManager.verifier.textForLocator(this.priceCellFirstRow, "350");
+      await this.utilManager.verifier.textForLocator(
+        this.priceCellFirstRow,
+        "350",
+      );
     });
   }
 }

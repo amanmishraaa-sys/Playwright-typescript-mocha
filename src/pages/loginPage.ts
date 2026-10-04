@@ -2,7 +2,7 @@ import { Page, Locator, expect, test } from "@playwright/test";
 import dotenv from "dotenv";
 import path from "path";
 import { pageActionUtil } from "../utils/pageActionUtils";
-import { pageNavigationUtil } from "../utils/pageNavigationUtils"
+import { pageNavigationUtil } from "../utils/pageNavigationUtils";
 import { UtilManager } from "../utils/utilManager";
 
 dotenv.config({
@@ -68,14 +68,20 @@ export class LoginPage {
   async enterUsername(username: string) {
     await test.step(`Enter username as ${username}`, async () => {
       await this.utilManager.pAUtil.clearField(this.usernameInput);
-      await this.utilManager.pAUtil.typeInInputField(this.usernameInput, username);
+      await this.utilManager.pAUtil.typeInInputField(
+        this.usernameInput,
+        username,
+      );
     });
   }
 
   async enterPassword(password: string) {
     await test.step(`Enter password as ${password}`, async () => {
       await this.utilManager.pAUtil.clearField(this.passwordInput);
-      await this.utilManager.pAUtil.typeInInputField(this.passwordInput, password);
+      await this.utilManager.pAUtil.typeInInputField(
+        this.passwordInput,
+        password,
+      );
     });
   }
 
@@ -98,18 +104,30 @@ export class LoginPage {
         this.blinkingTexts.filter({ hasText: linkText }),
       ),
     ]);
-    await this.utilManager.verifier.pageHasUrl(newPage, this.baseurl + "/documents-request");
+    await this.utilManager.verifier.pageHasUrl(
+      newPage,
+      this.baseurl + "/documents-request",
+    );
     let h1Title: Locator = newPage.locator("h1");
-    await this.utilManager.verifier.isVisible(h1Title.getByText("Documents request"));
+    await this.utilManager.verifier.isVisible(
+      h1Title.getByText("Documents request"),
+    );
   }
 
   async checkTermsAndConditionCheckbox() {
-    !(await this.utilManager.pAUtil.isCheckboxChecked(this.termsAndConditionsCheckbox))
-      ? await this.utilManager.pAUtil.checkTheCheckbox(this.termsAndConditionsCheckbox)
+    !(await this.utilManager.pAUtil.isCheckboxChecked(
+      this.termsAndConditionsCheckbox,
+    ))
+      ? await this.utilManager.pAUtil.checkTheCheckbox(
+          this.termsAndConditionsCheckbox,
+        )
       : console.log("Terms and Conditions already checked");
   }
 
   async verfiyWrongCredsAlertMessage() {
-    await this.utilManager.verifier.isVisible(this.incorrectCredsErrorMessage, 10000);
+    await this.utilManager.verifier.isVisible(
+      this.incorrectCredsErrorMessage,
+      10000,
+    );
   }
 }

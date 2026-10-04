@@ -34,7 +34,7 @@ test.describe("test suite for UI Basics", () => {
   test(
     `Verify that user get wrong password error message when user enters wrong password`,
     { tag: [Features.Login] },
-    
+
     async ({ clientLoginPage }) => {
       await clientLoginPage.enterUsername("doublebangle@gmail.com");
       await clientLoginPage.verifyUsernameTextInput("doublebangle@gmail.com");

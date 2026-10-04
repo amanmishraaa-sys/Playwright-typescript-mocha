@@ -37,12 +37,17 @@ export class ClientLoginCartPage {
   }
 
   async navigateToCartPage() {
-    await this.utilManager.pNUtil.navigateToUrl(this.baseurl + this.cartPageUrl);
+    await this.utilManager.pNUtil.navigateToUrl(
+      this.baseurl + this.cartPageUrl,
+    );
     await this.page.waitForLoadState("networkidle");
   }
 
   async navigateToCartPageWithToken(token: string) {
-    await this.utilManager.pNUtil.navigateToUrlWithPreLoadedToken(token,this.baseurl + this.cartPageUrl);
+    await this.utilManager.pNUtil.navigateToUrlWithPreLoadedToken(
+      token,
+      this.baseurl + this.cartPageUrl,
+    );
   }
 
   async ClickOnSignOutButton() {
@@ -61,13 +66,18 @@ export class ClientLoginCartPage {
       const productNamesRetrived: string[] =
         await this.cartItemNames.allTextContents();
       console.log(productNamesRetrived);
-      await this.utilManager.verifier.stringTypeArrayEquals(productNames, productNamesRetrived);
+      await this.utilManager.verifier.stringTypeArrayEquals(
+        productNames,
+        productNamesRetrived,
+      );
     });
   }
 
   async clickOnDeleteButton(procuctNames: string[]) {
     for (const product of procuctNames) {
-      await this.utilManager.pAUtil.clickElement(this.selectedDeleteButton(product));
+      await this.utilManager.pAUtil.clickElement(
+        this.selectedDeleteButton(product),
+      );
     }
   }
 }

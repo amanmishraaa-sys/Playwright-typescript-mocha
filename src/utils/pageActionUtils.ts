@@ -2,7 +2,6 @@ import { Page, Locator, test } from "@playwright/test";
 import { Verifier } from "./verifier";
 
 export class pageActionUtil {
-
   readonly verifier: Verifier;
 
   constructor(readonly page: Page) {
@@ -48,7 +47,7 @@ export class pageActionUtil {
 
   async getFieldContent(locator: Locator): Promise<string> {
     return await test.step(`Get contents of the field with locator: ${locator}`, async () => {
-      return (await locator.textContent()) ?? "";   
+      return (await locator.textContent()) ?? "";
     });
   }
 
@@ -79,7 +78,10 @@ export class pageActionUtil {
       await this.clickElement(
         sugesstionDropdownlocator.filter({ hasText: selectText }),
       );
-      await this.verifier.verifyInputFieldHasValue(inputFieldLocator, selectText);
+      await this.verifier.verifyInputFieldHasValue(
+        inputFieldLocator,
+        selectText,
+      );
     });
   }
 

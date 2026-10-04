@@ -31,15 +31,19 @@ export class ClientLoginPage {
       .filter({ hasText: "Practice Website for " });
     this.usernameField = this.page.locator("#userEmail");
     this.passwordField = this.page.locator("#userPassword");
-    this.loginButton = this.page.locator('#login');
-    this.wrongPasswordErrorMessage = this.page.getByRole('alert').filter({ hasText: ' Incorrect email or password. '});
+    this.loginButton = this.page.locator("#login");
+    this.wrongPasswordErrorMessage = this.page
+      .getByRole("alert")
+      .filter({ hasText: " Incorrect email or password. " });
     this.invalidEmailErrorMessage = this.page
       .locator(".invalid-feedback")
       .filter({ hasText: "*Enter Valid Email" });
   }
 
   async navigateToPage() {
-    await this.utilManager.pNUtil.navigateToUrl(this.baseurl + this.loginPageUrl);
+    await this.utilManager.pNUtil.navigateToUrl(
+      this.baseurl + this.loginPageUrl,
+    );
     await this.utilManager.pAUtil.waitForPageToLoad();
   }
 
@@ -54,7 +58,10 @@ export class ClientLoginPage {
   }
 
   async verifyUsernameTextInput(text: string) {
-    await this.utilManager.pAUtil.validateFieldContent(this.usernameField, text);
+    await this.utilManager.pAUtil.validateFieldContent(
+      this.usernameField,
+      text,
+    );
   }
 
   async enterPassword(text: string) {
@@ -62,10 +69,13 @@ export class ClientLoginPage {
   }
 
   async verifyPasswordTextInput(text: string) {
-    await this.utilManager.pAUtil.validateFieldContent(this.passwordField, text);
+    await this.utilManager.pAUtil.validateFieldContent(
+      this.passwordField,
+      text,
+    );
   }
 
-  async clickOnLoginButton(){
+  async clickOnLoginButton() {
     await this.utilManager.pAUtil.clickElement(this.loginButton);
   }
 
