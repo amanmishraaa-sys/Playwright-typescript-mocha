@@ -1,8 +1,6 @@
 import { Page, Locator, expect, test } from "@playwright/test";
 import dotenv from "dotenv";
 import path from "path";
-import { pageActionUtil } from "../utils/pageActionUtils";
-import { pageNavigationUtil } from "../utils/pageNavigationUtils";
 import { UtilManager } from "../utils/utilManager";
 
 dotenv.config({

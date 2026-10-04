@@ -1,9 +1,6 @@
 import { Page, Locator, test } from "@playwright/test";
 import dotenv from "dotenv";
 import path from "path";
-import { pageActionUtil } from "../utils/pageActionUtils";
-import { pageNavigationUtil } from "../utils/pageNavigationUtils";
-import { Verifier } from "../utils/verifier";
 import { FrameLocator } from "@playwright/test";
 import { UtilManager } from "../utils/utilManager";
 

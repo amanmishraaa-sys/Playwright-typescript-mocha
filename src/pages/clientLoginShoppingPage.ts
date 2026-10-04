@@ -1,6 +1,4 @@
 import { Page, Locator, APIRequestContext } from "@playwright/test";
-import { pageActionUtil } from "../utils/pageActionUtils";
-import { pageNavigationUtil } from "../utils/pageNavigationUtils";
 import dotenv from "dotenv";
 import path from "path";
 import { UtilManager } from "../utils/utilManager";

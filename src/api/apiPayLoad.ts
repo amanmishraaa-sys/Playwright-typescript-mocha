@@ -2,7 +2,7 @@ import { allProductApiPayload } from "../api/type";
 import { addProductToCartPayload } from "../api/type";
 
 export class apiPayLoad {
-  async allProductsApiPayload(apiPayload: allProductApiPayload) {
+  async allProductsApiPayload(apiPayload: allProductApiPayload): Promise<allProductApiPayload> {
     return {
       productName: apiPayload.productName,
       minPrice: apiPayload.minPrice,
