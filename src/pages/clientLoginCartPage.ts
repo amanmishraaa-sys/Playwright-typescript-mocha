@@ -13,6 +13,7 @@ export class ClientLoginCartPage {
   readonly utilManager: UtilManager;
   readonly cartPageUrl: string = process.env.cartPage!;
   readonly loginPageUrl: string = process.env.clientLoginPage!;
+  readonly cartItems: Locator;
   readonly cartItemNames: Locator;
   readonly signOutButton: Locator;
   readonly selectedProduct: (productName: string) => Locator;
@@ -23,6 +24,7 @@ export class ClientLoginCartPage {
     readonly page: Page,
   ) {
     this.utilManager = new UtilManager(this.page);
+    this.cartItems = this.page.locator('[class="cartSection"]');
     this.cartItemNames = this.page.locator('[class="cartSection"] h3');
     this.signOutButton = this.page.getByRole("button", { name: " Sign Out" });
     this.selectedProduct = (productName: string) =>
@@ -60,6 +62,7 @@ export class ClientLoginCartPage {
 
   async validateCartItemNames(productNames: string[]) {
     await test.step(`Verify the product names in the cart`, async () => {
+      await this.utilManager.verifier.isVisible(this.cartItems.first());
       const productNamesRetrived: string[] =
         await this.cartItemNames.allTextContents();
       console.log(productNamesRetrived);
