@@ -1,7 +1,6 @@
 import { test } from "../../fixtures/fixture";
 import dotenv from "dotenv";
 import path from "path";
-import { Features } from "../../constants/tags";
 
 dotenv.config({
   path: path.resolve(__dirname, "../../testcases.env"),
@@ -11,7 +10,6 @@ dotenv.config({
 test.describe("test suite for UI Basics", () => {
   test(
     `Verify that user is able to fill username and password at login page`,
-    { tag: [Features.Login] },
     async ({ clientLoginPage }) => {
       await clientLoginPage.enterUsername("Double Bangle");
       await clientLoginPage.verifyUsernameTextInput("Double Bangle");
@@ -22,7 +20,6 @@ test.describe("test suite for UI Basics", () => {
 
   test(
     `Verify that user is getting invalid email popup on entering wrong email format`,
-    { tag: [Features.Login] },
     async ({ clientLoginPage }) => {
       await clientLoginPage.enterUsername("doublebangle.com");
       await clientLoginPage.verifyUsernameTextInput("doublebangle.com");
@@ -33,8 +30,6 @@ test.describe("test suite for UI Basics", () => {
 
   test(
     `Verify that user get wrong password error message when user enters wrong password`,
-    { tag: [Features.Login] },
-
     async ({ clientLoginPage }) => {
       await clientLoginPage.enterUsername("doublebangle@gmail.com");
       await clientLoginPage.verifyUsernameTextInput("doublebangle@gmail.com");

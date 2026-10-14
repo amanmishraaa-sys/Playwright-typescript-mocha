@@ -11,7 +11,7 @@ test.describe(`Test scenarios on Automation Page`, () => {
   );
 
   test(`Perform a step to write United States (USA) in suggesstion box`, async ({
-    automationPage,
+    automationPage
   }) => {
     const typeText: string = "united";
     const targetText: string = "United States (USA)";

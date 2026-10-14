@@ -83,7 +83,7 @@ export class Api {
     const responseJson: allProductResponse = await this.apiUtils.post(
       endpoints.allProducts,
       200,
-      await this.apiPayload.allProductsApiPayload(allProApiPayload),
+      this.apiPayload.allProductsApiPayload(allProApiPayload),
       {
         accept: "application/json",
         "content-type": "application/json",
@@ -118,7 +118,7 @@ export class Api {
       const addProductToCartJson = await this.apiUtils.post(
         endpoints.addToCart,
         200,
-        await this.apiPayload.addProductToCartPayload(addProductToCartPayload),
+        this.apiPayload.addProductToCartPayload(addProductToCartPayload),
         {
           accept: "application/json",
           "content-type": "application/json",
