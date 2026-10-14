@@ -24,7 +24,7 @@ export default defineConfig({
         trace: process.env.CI ? "on-first-retry" : "on",
         screenshot: process.env.CI ? "only-on-failure" : "on",
         viewport: { width: 1920, height: 1080 },
-        video: process.env.CI ? "off" : "on",
+        video: process.env.CI ? "on" : "on",
       },
     },
     {
