@@ -2,7 +2,6 @@ import { allProductApiPayload } from "../api/type";
 import { addProductToCartPayload } from "../api/type";
 
 export class apiPayLoad {
-
   /**
    * To create the API payload for getting all products.
    * @param apiPayload - The API payload for all products.
@@ -22,9 +21,7 @@ export class apiPayLoad {
    * To create the API payload for adding products to the cart.
    * @param addProductToCartapiPayload - The API payload for adding products to the cart.
    */
-  addProductToCartPayload(
-    addProductToCartapiPayload: addProductToCartPayload,
-  ) {
+  addProductToCartPayload(addProductToCartapiPayload: addProductToCartPayload) {
     return {
       _id: addProductToCartapiPayload._id,
       product: {

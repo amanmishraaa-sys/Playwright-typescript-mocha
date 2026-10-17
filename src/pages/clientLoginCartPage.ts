@@ -88,7 +88,7 @@ export class ClientLoginCartPage {
     });
   }
 
-    /**
+  /**
    * To click on the delete button for the given products in the cart.
    * @param productNames - The list of product names to validate.
    */

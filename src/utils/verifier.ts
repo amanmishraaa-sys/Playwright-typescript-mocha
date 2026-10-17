@@ -67,7 +67,7 @@ export class Verifier {
     });
   }
 
-   /**
+  /**
    * To compare the first and second strings.
    * @param firstString - The first string to compare.
    * @param secondString - The second string to compare.

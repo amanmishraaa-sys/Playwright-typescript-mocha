@@ -60,18 +60,22 @@ test.describe(`API Login and using token for further UI Test cases`, () => {
   );
 });
 
-test.describe.serial(`Try different combinations of products to add in the cart and delete them`, () => {
+test.describe
+  .serial(`Try different combinations of products to add in the cart and delete them`, () => {
+  test.beforeAll(`Login with API, store the token`, async ({ apiLogin }) => {});
 
-  test.beforeAll(
-    `Login with API, store the token`,
-    async ({ apiLogin }) => {
-    },
-  );
-
-  test(`Add "ADIDAS ORIGINAL" to cart and delete it at the cart page`, async({clientLoginShoppingPageWithToken}) => {
-    const clientShoppingPage = new ClientLoginShoppingPage(baseurl, clientLoginShoppingPageWithToken.page);
+  test(`Add "ADIDAS ORIGINAL" to cart and delete it at the cart page`, async ({
+    clientLoginShoppingPageWithToken,
+  }) => {
+    const clientShoppingPage = new ClientLoginShoppingPage(
+      baseurl,
+      clientLoginShoppingPageWithToken.page,
+    );
     await clientShoppingPage.selectProducts(["ADIDAS ORIGINAL"]);
-    const clientCartPage = new ClientLoginCartPage(baseurl, clientShoppingPage.page);
+    const clientCartPage = new ClientLoginCartPage(
+      baseurl,
+      clientShoppingPage.page,
+    );
     await clientCartPage.navigateToCartPage();
     await clientCartPage.utilManager.pAUtil.refreshPage();
     await clientCartPage.validateCartItemNames(["ADIDAS ORIGINAL"]);
@@ -79,10 +83,18 @@ test.describe.serial(`Try different combinations of products to add in the cart 
     await clientCartPage.utilManager.pAUtil.refreshPage();
   });
 
-  test(`Add "ZARA COAT 3" to cart and delete it at the cart page`, async({clientLoginShoppingPageWithToken}) => {
-    const clientShoppingPage = new ClientLoginShoppingPage(baseurl, clientLoginShoppingPageWithToken.page);
+  test(`Add "ZARA COAT 3" to cart and delete it at the cart page`, async ({
+    clientLoginShoppingPageWithToken,
+  }) => {
+    const clientShoppingPage = new ClientLoginShoppingPage(
+      baseurl,
+      clientLoginShoppingPageWithToken.page,
+    );
     await clientShoppingPage.selectProducts(["ZARA COAT 3"]);
-    const clientCartPage = new ClientLoginCartPage(baseurl, clientShoppingPage.page);
+    const clientCartPage = new ClientLoginCartPage(
+      baseurl,
+      clientShoppingPage.page,
+    );
     await clientCartPage.navigateToCartPage();
     await clientCartPage.utilManager.pAUtil.refreshPage();
     await clientCartPage.validateCartItemNames(["ZARA COAT 3"]);
@@ -90,10 +102,18 @@ test.describe.serial(`Try different combinations of products to add in the cart 
     await clientCartPage.utilManager.pAUtil.refreshPage();
   });
 
-  test(`Add "iphone 13 pro" to cart and delete it at the cart page`, async({clientLoginShoppingPageWithToken}) => {
-    const clientShoppingPage = new ClientLoginShoppingPage(baseurl, clientLoginShoppingPageWithToken.page);
+  test(`Add "iphone 13 pro" to cart and delete it at the cart page`, async ({
+    clientLoginShoppingPageWithToken,
+  }) => {
+    const clientShoppingPage = new ClientLoginShoppingPage(
+      baseurl,
+      clientLoginShoppingPageWithToken.page,
+    );
     await clientShoppingPage.selectProducts(["iphone 13 pro"]);
-    const clientCartPage = new ClientLoginCartPage(baseurl, clientShoppingPage.page);
+    const clientCartPage = new ClientLoginCartPage(
+      baseurl,
+      clientShoppingPage.page,
+    );
     await clientCartPage.navigateToCartPage();
     await clientCartPage.utilManager.pAUtil.refreshPage();
     await clientCartPage.validateCartItemNames(["iphone 13 pro"]);
@@ -101,47 +121,109 @@ test.describe.serial(`Try different combinations of products to add in the cart 
     await clientCartPage.utilManager.pAUtil.refreshPage();
   });
 
-  test(`Add "ADIDAS ORIGINAL","ZARA COAT 3" to cart and delete it at the cart page`, async({clientLoginShoppingPageWithToken}) => {
-    const clientShoppingPage = new ClientLoginShoppingPage(baseurl, clientLoginShoppingPageWithToken.page);
-    await clientShoppingPage.selectProducts(["ADIDAS ORIGINAL","ZARA COAT 3"]);
-    const clientCartPage = new ClientLoginCartPage(baseurl, clientShoppingPage.page);
+  test(`Add "ADIDAS ORIGINAL","ZARA COAT 3" to cart and delete it at the cart page`, async ({
+    clientLoginShoppingPageWithToken,
+  }) => {
+    const clientShoppingPage = new ClientLoginShoppingPage(
+      baseurl,
+      clientLoginShoppingPageWithToken.page,
+    );
+    await clientShoppingPage.selectProducts(["ADIDAS ORIGINAL", "ZARA COAT 3"]);
+    const clientCartPage = new ClientLoginCartPage(
+      baseurl,
+      clientShoppingPage.page,
+    );
     await clientCartPage.navigateToCartPage();
     await clientCartPage.utilManager.pAUtil.refreshPage();
-    await clientCartPage.validateCartItemNames(["ADIDAS ORIGINAL","ZARA COAT 3"]);
-    await clientCartPage.clickOnDeleteButton(["ADIDAS ORIGINAL","ZARA COAT 3"]);
+    await clientCartPage.validateCartItemNames([
+      "ADIDAS ORIGINAL",
+      "ZARA COAT 3",
+    ]);
+    await clientCartPage.clickOnDeleteButton([
+      "ADIDAS ORIGINAL",
+      "ZARA COAT 3",
+    ]);
     await clientCartPage.utilManager.pAUtil.refreshPage();
   });
 
-  test(`Add "ADIDAS ORIGINAL","iphone 13 pro" to cart and delete it at the cart page`, async({clientLoginShoppingPageWithToken}) => {
-    const clientShoppingPage = new ClientLoginShoppingPage(baseurl, clientLoginShoppingPageWithToken.page);
-    await clientShoppingPage.selectProducts(["ADIDAS ORIGINAL","iphone 13 pro"]);
-    const clientCartPage = new ClientLoginCartPage(baseurl, clientShoppingPage.page);
+  test(`Add "ADIDAS ORIGINAL","iphone 13 pro" to cart and delete it at the cart page`, async ({
+    clientLoginShoppingPageWithToken,
+  }) => {
+    const clientShoppingPage = new ClientLoginShoppingPage(
+      baseurl,
+      clientLoginShoppingPageWithToken.page,
+    );
+    await clientShoppingPage.selectProducts([
+      "ADIDAS ORIGINAL",
+      "iphone 13 pro",
+    ]);
+    const clientCartPage = new ClientLoginCartPage(
+      baseurl,
+      clientShoppingPage.page,
+    );
     await clientCartPage.navigateToCartPage();
     await clientCartPage.utilManager.pAUtil.refreshPage();
-    await clientCartPage.validateCartItemNames(["ADIDAS ORIGINAL","iphone 13 pro"]);
-    await clientCartPage.clickOnDeleteButton(["ADIDAS ORIGINAL","iphone 13 pro"]);
+    await clientCartPage.validateCartItemNames([
+      "ADIDAS ORIGINAL",
+      "iphone 13 pro",
+    ]);
+    await clientCartPage.clickOnDeleteButton([
+      "ADIDAS ORIGINAL",
+      "iphone 13 pro",
+    ]);
     await clientCartPage.utilManager.pAUtil.refreshPage();
   });
 
-  test(`Add "ADIDAS ORIGINAL","ZARA COAT 3","iphone 13 pro" to cart and delete it at the cart page`, async({clientLoginShoppingPageWithToken}) => {
-    const clientShoppingPage = new ClientLoginShoppingPage(baseurl, clientLoginShoppingPageWithToken.page);
-    await clientShoppingPage.selectProducts(["ADIDAS ORIGINAL","ZARA COAT 3","iphone 13 pro"]);
-    const clientCartPage = new ClientLoginCartPage(baseurl, clientShoppingPage.page);
+  test(`Add "ADIDAS ORIGINAL","ZARA COAT 3","iphone 13 pro" to cart and delete it at the cart page`, async ({
+    clientLoginShoppingPageWithToken,
+  }) => {
+    const clientShoppingPage = new ClientLoginShoppingPage(
+      baseurl,
+      clientLoginShoppingPageWithToken.page,
+    );
+    await clientShoppingPage.selectProducts([
+      "ADIDAS ORIGINAL",
+      "ZARA COAT 3",
+      "iphone 13 pro",
+    ]);
+    const clientCartPage = new ClientLoginCartPage(
+      baseurl,
+      clientShoppingPage.page,
+    );
     await clientCartPage.navigateToCartPage();
     await clientCartPage.utilManager.pAUtil.refreshPage();
-    await clientCartPage.validateCartItemNames(["ADIDAS ORIGINAL","ZARA COAT 3","iphone 13 pro"]);
-    await clientCartPage.clickOnDeleteButton(["ADIDAS ORIGINAL","ZARA COAT 3","iphone 13 pro"]);
+    await clientCartPage.validateCartItemNames([
+      "ADIDAS ORIGINAL",
+      "ZARA COAT 3",
+      "iphone 13 pro",
+    ]);
+    await clientCartPage.clickOnDeleteButton([
+      "ADIDAS ORIGINAL",
+      "ZARA COAT 3",
+      "iphone 13 pro",
+    ]);
     await clientCartPage.utilManager.pAUtil.refreshPage();
   });
 
-  test(`Add "ZARA COAT 3","iphone 13 pro" to cart and delete it at the cart page`, async({clientLoginShoppingPageWithToken}) => {
-    const clientShoppingPage = new ClientLoginShoppingPage(baseurl, clientLoginShoppingPageWithToken.page);
-    await clientShoppingPage.selectProducts(["ZARA COAT 3","iphone 13 pro"]);
-    const clientCartPage = new ClientLoginCartPage(baseurl, clientShoppingPage.page);
+  test(`Add "ZARA COAT 3","iphone 13 pro" to cart and delete it at the cart page`, async ({
+    clientLoginShoppingPageWithToken,
+  }) => {
+    const clientShoppingPage = new ClientLoginShoppingPage(
+      baseurl,
+      clientLoginShoppingPageWithToken.page,
+    );
+    await clientShoppingPage.selectProducts(["ZARA COAT 3", "iphone 13 pro"]);
+    const clientCartPage = new ClientLoginCartPage(
+      baseurl,
+      clientShoppingPage.page,
+    );
     await clientCartPage.navigateToCartPage();
     await clientCartPage.utilManager.pAUtil.refreshPage();
-    await clientCartPage.validateCartItemNames(["ZARA COAT 3","iphone 13 pro"]);
-    await clientCartPage.clickOnDeleteButton(["ZARA COAT 3","iphone 13 pro"]);
+    await clientCartPage.validateCartItemNames([
+      "ZARA COAT 3",
+      "iphone 13 pro",
+    ]);
+    await clientCartPage.clickOnDeleteButton(["ZARA COAT 3", "iphone 13 pro"]);
     await clientCartPage.utilManager.pAUtil.refreshPage();
   });
 });
