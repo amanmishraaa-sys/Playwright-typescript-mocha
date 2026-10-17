@@ -35,6 +35,9 @@ export class ClientLoginCartPage {
       this.selectedProduct(productName).locator('[class="btn btn-danger"]');
   }
 
+  /**
+   * To navigate to the Cart page.
+   */
   async navigateToCartPage() {
     await this.utilManager.pNUtil.navigateToUrl(
       this.baseurl + this.cartPageUrl,
@@ -42,6 +45,10 @@ export class ClientLoginCartPage {
     await this.page.waitForLoadState("networkidle");
   }
 
+  /**
+   * To navigate to the Cart page with the providied token.
+   * @param token - The authentication token to be used for pre-loading the page.
+   */
   async navigateToCartPageWithToken(token: string) {
     await this.utilManager.pNUtil.navigateToUrlWithPreLoadedToken(
       token,
@@ -49,6 +56,10 @@ export class ClientLoginCartPage {
     );
   }
 
+  /**
+   * To navigate to the Cart page with the providied token.
+   * @param token - The authentication token to be used for pre-loading the page.
+   */
   async ClickOnSignOutButton() {
     await test.step(`Logout of the shopping page`, async () => {
       await this.utilManager.pAUtil.clickElement(this.signOutButton);
@@ -60,6 +71,10 @@ export class ClientLoginCartPage {
     });
   }
 
+  /**
+   * To validate the names of items in the cart.
+   * @param productNames - The list of product names to validate.
+   */
   async validateCartItemNames(productNames: string[]) {
     await test.step(`Verify the product names in the cart`, async () => {
       await this.utilManager.verifier.isVisible(this.cartItems.first());
@@ -73,8 +88,12 @@ export class ClientLoginCartPage {
     });
   }
 
-  async clickOnDeleteButton(procuctNames: string[]) {
-    for (const product of procuctNames) {
+    /**
+   * To click on the delete button for the given products in the cart.
+   * @param productNames - The list of product names to validate.
+   */
+  async clickOnDeleteButton(productNames: string[]) {
+    for (const product of productNames) {
       await this.utilManager.pAUtil.clickElement(
         this.selectedDeleteButton(product),
       );

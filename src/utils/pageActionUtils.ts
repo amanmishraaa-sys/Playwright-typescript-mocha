@@ -64,6 +64,13 @@ export class pageActionUtil {
     });
   }
 
+  /**
+   * To handle the auto-suggestion box.
+   * @param inputFieldLocator - The locator for the input field.
+   * @param searchText - The text to be searched in the suggestion box.
+   * @param sugesstionDropdownlocator - The locator for the suggestionbox dropdown.
+   * @param selectText - The text to be selected in the suggestion box.
+   */
   async handleAutoSuggestionBox(
     inputFieldLocator: Locator,
     searchText: string,
@@ -85,6 +92,9 @@ export class pageActionUtil {
     });
   }
 
+  /**
+   * Wait for the page to load completely by waiting for the network to be idle.
+   */
   async waitForPageToLoad() {
     await this.page.waitForLoadState("networkidle");
   }

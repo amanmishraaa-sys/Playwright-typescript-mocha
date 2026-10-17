@@ -2,6 +2,13 @@ import * as ExcelJS from "exceljs";
 
 export class ExcelUtil {
   constructor() {}
+
+  /**
+   * To find and replace a value in the Excel file.
+   * @param searchText - The value to be searched in the Excel file.
+   * @param newValue - The value to replace the searchText in the Excel file.
+   * @param path - The path of the Excel file.
+   */
   async findValueAndReplace(
     searchText: string,
     newValue: string,
@@ -36,6 +43,15 @@ export class ExcelUtil {
     );
   }
 
+    /**
+   * To replace a value at a location in the Excel file.
+   * @param workbook - The ExcelJS workbook instance.
+   * @param worksheet - The ExcelJS worksheet instance.
+   * @param path - The path of the Excel file.
+   * @param newValue - The value to replace the existing value with.
+   * @param rowNumber - The row number of the cell to replace.
+   * @param columnNumber - The column number of the cell to replace.
+   */
   async replaceValueAt(
     workbook: ExcelJS.Workbook,
     worksheet: ExcelJS.Worksheet,

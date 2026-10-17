@@ -35,6 +35,9 @@ export class AutomationPage {
     });
   }
 
+  /**
+   * To navigate to the Automation page.
+   */
   async navigateToAutomationPage() {
     await this.utilManager.pNUtil.navigateToUrl(
       this.baseurl + this.automationPageUrl,
@@ -42,6 +45,9 @@ export class AutomationPage {
     await this.verifyPageIsLoaded();
   }
 
+  /**
+   * To verify that the Automation page has loaded.
+   */
   async verifyPageIsLoaded() {
     await test.step(`Waiting for Automation page to load`, async () => {
       await this.utilManager.verifier.pageHasUrl(
@@ -53,6 +59,9 @@ export class AutomationPage {
     });
   }
 
+  /**
+   * To check and accept the alert on the page.
+   */
   async checkAndAcceptAlert() {
     this.page.once("dialog", async (dialog) => {
       await dialog.accept();
@@ -60,6 +69,11 @@ export class AutomationPage {
     await this.utilManager.pAUtil.clickElement(this.alertButton);
   }
 
+  /**
+   * To select a given text in the suggestion box.
+   * @param typeText - The text to be typed in the suggestion box.
+   * @param targetText - The text to be selected in the suggestion box.
+   */
   async selectGivenTextInSuggesstionBox(typeText: string, targetText: string) {
     await this.utilManager.pAUtil.handleAutoSuggestionBox(
       this.suggesttionBox,
@@ -69,6 +83,9 @@ export class AutomationPage {
     );
   }
 
+  /**
+   * To click on the All Access Plan link in the frame.
+   */
   async clickAllAccessPlanInFrame() {
     await test.step(`Clicking on All Access Plan link in frame`, async () => {
       await this.utilManager.pAUtil.clickElement(this.frameAllAccessPlan);

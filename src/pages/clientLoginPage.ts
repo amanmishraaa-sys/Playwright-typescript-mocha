@@ -37,6 +37,9 @@ export class ClientLoginPage {
       .filter({ hasText: "*Enter Valid Email" });
   }
 
+  /**
+   * To navigate to the Client Login page.
+   */
   async navigateToPage() {
     await this.utilManager.pNUtil.navigateToUrl(
       this.baseurl + this.loginPageUrl,
@@ -44,16 +47,27 @@ export class ClientLoginPage {
     await this.utilManager.pAUtil.waitForPageToLoad();
   }
 
+  /**
+   * To verify that the Client Login page is loaded.
+   */
   async verifyPageIsLoaded() {
     await test.step(`Verify that the client Login page is loaded`, async () => {
       await this.utilManager.verifier.isVisible(this.titleOfThePage);
     });
   }
 
+  /**
+   * To enter a username in the username field.
+   * @param text - The username to be entered.
+   */
   async enterUsername(text: string) {
     await this.utilManager.pAUtil.typeInInputField(this.usernameField, text);
   }
 
+  /**
+   * To verify the content of the username text input field.
+   * @param text - The expected username.
+   */
   async verifyUsernameTextInput(text: string) {
     await this.utilManager.pAUtil.validateFieldContent(
       this.usernameField,
@@ -61,10 +75,18 @@ export class ClientLoginPage {
     );
   }
 
+  /**
+   * To enter a password in the password field.
+   * @param text - The password to be entered.
+   */
   async enterPassword(text: string) {
     await this.utilManager.pAUtil.typeInInputField(this.passwordField, text);
   }
 
+  /**
+   * To verify the content of the password text input field.
+   * @param text - The expected password.
+   */
   async verifyPasswordTextInput(text: string) {
     await this.utilManager.pAUtil.validateFieldContent(
       this.passwordField,
@@ -72,14 +94,23 @@ export class ClientLoginPage {
     );
   }
 
+  /**
+   * To click on the login button.
+   */
   async clickOnLoginButton() {
     await this.utilManager.pAUtil.clickElement(this.loginButton);
   }
 
+  /**
+   * To verify the visibility of the wrong password error message.
+   */
   async verifyVisibilityOfWrongErrorMessage() {
     await this.utilManager.verifier.isVisible(this.wrongPasswordErrorMessage);
   }
 
+  /**
+   * To verify the visibility of the invalid email error message.
+   */
   async verifyVisibilityOfInvalidEmailErrorMessage() {
     await this.utilManager.verifier.isVisible(this.invalidEmailErrorMessage);
   }

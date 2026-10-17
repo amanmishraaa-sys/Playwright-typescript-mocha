@@ -9,6 +9,10 @@ export class APIUtil {
     this.apibaseurl = apibaseurl;
   }
 
+  /**
+   * To refine complete URL for an API endpoint.
+   * @param endpoint - The API endpoint.
+   */
   getUrl(endpoint: string) {
     if (endpoint.startsWith("http") || endpoint.startsWith("https")) {
       return endpoint;
@@ -20,6 +24,12 @@ export class APIUtil {
     return `${this.apibaseurl}${endpoint}`;
   }
 
+  /**
+   * To get the response from GET http method.
+   * @param endpoint - The API endpoint.
+   * @param status - The expected status code.
+   * @param queryparams - The query parameters for the API request(optional).
+   */
   async get(
     endpoint: string,
     status: number,
@@ -36,6 +46,13 @@ export class APIUtil {
     return responsJson;
   }
 
+  /**
+   * To get the response from POST http method.
+   * @param endpoint - The API endpoint.
+   * @param status - The expected status code.
+   * @param data - The data for the API request.
+   * @param headers - The headers for the API request(optional).
+   */
   async post(
     endpoint: string,
     status: number,

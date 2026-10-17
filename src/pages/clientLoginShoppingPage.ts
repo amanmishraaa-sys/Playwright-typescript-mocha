@@ -31,6 +31,10 @@ export class ClientLoginShoppingPage {
     this.heading = this.page.getByRole("heading", { name: "AUTOMATION" });
   }
 
+  /**
+   * To navigate to the Shopping page with the given token.
+   * @param token - The authentication token to be used for pre-loading the page.
+   */
   async navigateToShoppingPageWithToken(token: string) {
     await this.utilManager.pNUtil.navigateToUrlWithPreLoadedToken(
       token,
@@ -38,6 +42,10 @@ export class ClientLoginShoppingPage {
     );
   }
 
+  /**
+   * To click on the "Add to Cart" button for the selected product items.
+   * @param productNames - An array of product names for which to add to cart button needs to be clicked.
+   */
   async selectProducts(productNames: string[]) {
     for (const element of productNames) {
       await this.utilManager.pAUtil.clickElement(

@@ -40,6 +40,9 @@ export class Api {
     this.apiPayload = new apiPayLoad();
   }
 
+  /**
+   * To Login through API and store the token in the file.
+   */
   async loginAPI() {
     const responsejson = await this.apiUtils.post(
       endpoints.login,
@@ -56,6 +59,9 @@ export class Api {
 
   async logoutAPI() {}
 
+  /**
+   * To get all products through API.
+   */
   async getAllProductsAPI() {
     const responseJson = await this.apiUtils.post(
       endpoints.allProducts,
@@ -71,6 +77,10 @@ export class Api {
     return responseJson;
   }
 
+  /**
+   * To Add products to the cart through API.
+   * @param productNames - The names of the products to add to the cart.
+   */
   async addProductsInCart(productNames: string[]) {
     const allProApiPayload: allProductApiPayload = {
       productName: "",

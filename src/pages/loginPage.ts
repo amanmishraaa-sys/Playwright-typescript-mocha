@@ -34,6 +34,9 @@ export class LoginPage {
     this.incorrectCredsErrorMessage = page.locator("[style='display: block;']");
   }
 
+  /**
+   * To verify that the Login page has loaded.
+   */
   async veryPageIsLoaded() {
     await test.step(`Login in confirmed`, async () => {
       await this.utilManager.verifier.pageHasUrl(
@@ -44,6 +47,9 @@ export class LoginPage {
     });
   }
 
+  /**
+   * To navigate to the Login page.
+   */
   async navigateToLoginPage() {
     const url: string = this.baseurl + this.loginPageUrl;
     await test.step(`Navigate to URL: ${url}`, async () => {
@@ -51,6 +57,9 @@ export class LoginPage {
     });
   }
 
+  /**
+   * To Login into the page.
+   */
   async loginIntoThePage() {
     await this.navigateToLoginPage();
     console.log(
@@ -63,6 +72,10 @@ export class LoginPage {
     await this.veryPageIsLoaded();
   }
 
+  /**
+   * To fill the username field.
+   * @param username - The username to be entered in the username field.
+   */
   async enterUsername(username: string) {
     await test.step(`Enter username as ${username}`, async () => {
       await this.utilManager.pAUtil.clearField(this.usernameInput);
@@ -73,6 +86,10 @@ export class LoginPage {
     });
   }
 
+  /**
+   * To fill the password field.
+   * @param password - The password to be entered in the password field.
+   */
   async enterPassword(password: string) {
     await test.step(`Enter password as ${password}`, async () => {
       await this.utilManager.pAUtil.clearField(this.passwordInput);
@@ -83,18 +100,29 @@ export class LoginPage {
     });
   }
 
+  /**
+   * To click the Sign In button.
+   */
   async clickSignInButton() {
     await test.step(`Click on signin button`, async () => {
       await this.utilManager.pAUtil.clickElement(this.signInButton);
     });
   }
 
+  /**
+   * To verify the title of the page.
+   * @param title - The title to be verified.
+   */
   async verifyPageTitle(title: string) {
     await test.step(`Verify the title of the page as ${title}`, async () => {
       await this.utilManager.verifier.pageHasTitle(this.page, title);
     });
   }
 
+  /**
+   * To verify the new tab opening on clicking different links.
+   * @param linkText - The text of the link to be clicked.
+   */
   async verifyNewTabOpeningOnClickingDifferentlinks(linkText: string) {
     const [newPage] = await Promise.all([
       this.page.context().waitForEvent("page"),
@@ -112,6 +140,9 @@ export class LoginPage {
     );
   }
 
+  /**
+   * To check the Terms and Conditions checkbox.
+   */
   async checkTermsAndConditionCheckbox() {
     !(await this.utilManager.pAUtil.isCheckboxChecked(
       this.termsAndConditionsCheckbox,
@@ -122,6 +153,9 @@ export class LoginPage {
       : console.log("Terms and Conditions already checked");
   }
 
+  /**
+   * To verify the wrong credentials alert message.
+   */
   async verfiyWrongCredsAlertMessage() {
     await this.utilManager.verifier.isVisible(
       this.incorrectCredsErrorMessage,

@@ -24,6 +24,9 @@ export class UploadDownloadPage {
     this.priceCellFirstRow = page.locator("[id='row-0'] [data-column-id='4']");
   }
 
+  /**
+   * To navigate to the upload/download page.
+   */
   async navigateToUploadDownloadPage() {
     await test.step(`Navigate to URL: ${this.loginUrl + "/upload-download-test/index.html"}`, async () => {
       await this.utilManager.pNUtil.navigateToUrl(
@@ -32,12 +35,19 @@ export class UploadDownloadPage {
     });
   }
 
+  /**
+   * To upload a file.
+   * @param filePath - The path of the file to be uploaded.
+   */
   async uploadFile(filePath: string) {
     await test.step(`Upload the file`, async () => {
       await this.utilManager.pAUtil.uploadFile(this.choosFileButton, filePath);
     });
   }
 
+  /**
+   * To click on the download button and save the file.
+   */
   async clickOnDownloadButtonAndSaveFile() {
     await test.step(`Click on download button and saving the file to particular path`, async () => {
       const downloadPromise = this.page.waitForEvent("download");
@@ -48,12 +58,20 @@ export class UploadDownloadPage {
     });
   }
 
+  /**
+   * To delete the downloaded file.
+   */
   async deleteDownloadedFile() {
     await test.step(`Delete the downloaded file at this path: ${downloadPath}`, async () => {
       await this.utilManager.fUtil.deleteFileIfExists(downloadPath);
     });
   }
 
+  /**
+   * To change the value in the downloaded file.
+   * @param searchValue - The value to be searched in the downloaded file.
+   * @param replaceValue - The value to replace the searched value in the downloaded file.
+   */
   async changeThevalueInDownloadedFile(
     searchValue: string,
     replaceValue: string,
@@ -67,6 +85,9 @@ export class UploadDownloadPage {
     });
   }
 
+  /**
+   * To upload the modified file.
+   */
   async uploadModifiedFile() {
     await test.step(`Upload the modified file`, async () => {
       await this.utilManager.pAUtil.uploadFile(
@@ -76,6 +97,9 @@ export class UploadDownloadPage {
     });
   }
 
+  /**
+   * To verify the changes on the page after the modified file has been uploaded.
+   */
   async verifyTheChangesOnThePage() {
     await test.step(`Verify the changes on the page after modified file has been uploaded`, async () => {
       await this.utilManager.verifier.textForLocator(

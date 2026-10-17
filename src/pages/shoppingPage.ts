@@ -14,6 +14,10 @@ export class ShoppingPage {
     this.checkOutButton = page.locator("[class='nav-link btn btn-primary']");
   }
 
+  /**
+   * To click on add button for an item with a specific name.
+   * @param itemName - The name of the item for which the add button is to be clicked.
+   */
   async clickOnAddButtonForAnItemWithName(itemName: string) {
     await test.step(`Clicking on add button for ${itemName} item`, async () => {
       let addButton: Locator =
@@ -22,6 +26,10 @@ export class ShoppingPage {
     });
   }
 
+  /**
+   * To verify the number of items on the Cart button.
+   * @param itemNumber - The expected number of items on the Cart button.
+   */
   async verifyNumberOfItemsOnCartButton(itemNumber: number) {
     await test.step(`Verify the number (${itemNumber}) on Cart button`, async () => {
       await this.utilManager.verifier.stringContains(
