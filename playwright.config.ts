@@ -21,7 +21,7 @@ export default defineConfig({
       use: {
         browserName: "chromium",
         headless: true,
-        trace: process.env.CI ? "on-first-retry" : "on",
+        trace: process.env.CI ? "off" : "on",
         screenshot: process.env.CI ? "only-on-failure" : "on",
         viewport: { width: 1920, height: 1080 },
         video: process.env.CI ? "on" : "on",
