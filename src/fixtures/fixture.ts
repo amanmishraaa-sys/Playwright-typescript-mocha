@@ -32,46 +32,46 @@ export const test = base.extend<Fixtures>({
   afterLoginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(baseurl, page);
     await loginPage.loginIntoThePage();
-    use(loginPage);
+    await use(loginPage);
   },
   beforeLoginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(baseurl, page);
     await loginPage.navigateToLoginPage();
-    use(loginPage);
+    await use(loginPage);
   },
   automationPage: async ({ page }, use) => {
     const automationPage = new AutomationPage(baseurl, page);
     await automationPage.navigateToAutomationPage();
-    use(automationPage);
+    await  use(automationPage);
   },
   uploadDownloadPage: async ({ page }, use) => {
     const uploadDownloadPage = new UploadDownloadPage(page);
     await uploadDownloadPage.navigateToUploadDownloadPage();
-    use(uploadDownloadPage);
+    await use(uploadDownloadPage);
   },
   apiLogin: async ({}, use) => {
     const apiContext: APIRequestContext =
       await NewContextFactory.createNewContextWithRequest();
     const apiLogin = new Api(apiContext);
     await apiLogin.loginAPI();
-    use(apiLogin);
+    await use(apiLogin);
   },
   clientLoginCartPageWithToken: async ({ page }, use) => {
     const token = await fs.readFile("token.txt", "utf-8");
     const clientLoginCartPage = new ClientLoginCartPage(baseurl, page);
     await clientLoginCartPage.navigateToCartPageWithToken(token);
-    use(clientLoginCartPage);
+    await use(clientLoginCartPage);
     await clientLoginCartPage.ClickOnSignOutButton();
   },
   clientLoginShoppingPageWithToken: async ({ page }, use) => {
     const token = await fs.readFile("token.txt", "utf-8");
     const clientLoginShoppingPage = new ClientLoginShoppingPage(baseurl, page);
     await clientLoginShoppingPage.navigateToShoppingPageWithToken(token);
-    use(clientLoginShoppingPage);
+    await use(clientLoginShoppingPage);
   },
   clientLoginPage: async ({ page }, use) => {
     const clientLoginPage = new ClientLoginPage(baseurl, page);
     await clientLoginPage.navigateToPage();
-    use(clientLoginPage);
+    await use(clientLoginPage);
   },
 });
