@@ -17,6 +17,7 @@ export class ClientLoginPage {
   readonly loginButton: Locator;
   readonly wrongPasswordErrorMessage: Locator;
   readonly invalidEmailErrorMessage: Locator;
+  readonly registrationButton: Locator;
 
   constructor(
     readonly baseurl: string,
@@ -35,6 +36,7 @@ export class ClientLoginPage {
     this.invalidEmailErrorMessage = this.page
       .locator(".invalid-feedback")
       .filter({ hasText: "*Enter Valid Email" });
+    this.registrationButton = page.getByText('Register here', { exact: true });
   }
 
   /**
@@ -113,5 +115,12 @@ export class ClientLoginPage {
    */
   async verifyVisibilityOfInvalidEmailErrorMessage() {
     await this.utilManager.verifier.isVisible(this.invalidEmailErrorMessage);
+  }
+
+  /**
+   * Click on the register button.
+   */
+  async clickOnRegistrationButton() {
+    await this.utilManager.pAUtil.clickElement(this.registrationButton);
   }
 }

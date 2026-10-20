@@ -1,6 +1,7 @@
 import { test } from "../../fixtures/fixture";
 import dotenv from "dotenv";
 import path from "path";
+import { RegistrationPage } from "../../pages/registrationPage";
 
 dotenv.config({
   path: path.resolve(__dirname, "../../testcases.env"),
@@ -35,5 +36,17 @@ test.describe("test suite for UI Basics", () => {
     await clientLoginPage.verifyPasswordTextInput("DoubleDouble");
     await clientLoginPage.clickOnLoginButton();
     await clientLoginPage.verifyVisibilityOfWrongErrorMessage();
+  });
+});
+
+test.describe(`Test suite for registeration page`, () => {
+  test(`Verify that user is able to register with valid details`, async ({ clientLoginPage }) => {
+    await clientLoginPage.clickOnRegistrationButton();
+    const baseUrl = 'https://rahulshettyacademy.com';
+    const registrationPage = new RegistrationPage(baseUrl, clientLoginPage.page);
+    await registrationPage.waitForRegistrationPageToLoaded();
+    await registrationPage.fillTheRegistrationFormWithRandomFirstAndLastName("Student","Male","Aman@12345");
+    await registrationPage.clickOnRegisterButton();
+    await registrationPage.verifyAccountCreatedSuccessfully();
   });
 });

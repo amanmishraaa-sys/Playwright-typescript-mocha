@@ -8,18 +8,32 @@ export class pageActionUtil {
     this.verifier = new Verifier();
   }
 
+  /**
+   * To click element with the given locator.
+   * @param locator - Locator of the element to be clicked.
+   */
   async clickElement(locator: Locator) {
     await test.step(`Performing click action for locator: ${locator}`, async () => {
       await locator.click();
     });
   }
 
+  /**
+   * To type the given text in the given input field.
+   * @param locator - Locator of the input field.
+   * @param text - Text to be entered in the input field.
+   */
   async typeInInputField(locator: Locator, text: string) {
     await test.step(`Performing type action for locator: ${locator}`, async () => {
       await locator.fill(text);
     });
   }
 
+  /**
+   * To validate whether input field contains the given text.
+   * @param locator - Locator of the input field.
+   * @param text - Text to be validated.
+   */
   async validateFieldContent(locator: Locator, text: string) {
     await test.step(`Validate the content of the given field`, async () => {
       const retrievedText = await locator.inputValue();
@@ -27,36 +41,60 @@ export class pageActionUtil {
     });
   }
 
+  /**
+   * To clear the given input field.
+   * @param locator - Locator of the input field.
+   */
   async clearField(locator: Locator) {
     await test.step(`Clearing the field with locator: ${locator}`, async () => {
       await locator.clear();
     });
   }
 
+  /**
+   * To validate whether the given checkbox is checked.
+   * @param locator - Locator of the checkbox.
+   */
   async isCheckboxChecked(locator: Locator): Promise<boolean> {
     return await test.step(`Checking whether checkbox with locator: ${locator} is checked or not`, async () => {
       return await locator.isChecked();
     });
   }
 
+  /**
+   * To check the given checkbox.
+   * @param locator - Locator of the checkbox.
+   */
   async checkTheCheckbox(locator: Locator) {
     await test.step(`Checking the checkbox with locator: ${locator}`, async () => {
       await locator.check();
     });
   }
 
+  /**
+   * To get the content of the input field.
+   * @param locator - Locator of the input field.
+   */
   async getFieldContent(locator: Locator): Promise<string> {
     return await test.step(`Get contents of the field with locator: ${locator}`, async () => {
       return (await locator.textContent()) ?? "";
     });
   }
 
-  async uploadFile(locator: Locator, downloadpath: string) {
-    await test.step(`Uploading for element with locator: ${locator} from path ${downloadpath}`, async () => {
-      await locator.setInputFiles(downloadpath);
+  /**
+   * To upload file.
+   * @param locator - Locator of the element use to upload the file.
+   * @param uploadpath - Path of the file that needs uploading.
+   */
+  async uploadFile(locator: Locator, uploadpath: string) {
+    await test.step(`Uploading for element with locator: ${locator} from path ${uploadpath}`, async () => {
+      await locator.setInputFiles(uploadpath);
     });
   }
 
+  /**
+   * To refresh the current page.
+   */
   async refreshPage() {
     await test.step(`Refreshing the current page`, async () => {
       await this.page.reload();
@@ -97,5 +135,14 @@ export class pageActionUtil {
    */
   async waitForPageToLoad() {
     await this.page.waitForLoadState("networkidle");
+  }
+
+  async handleDropdownField(
+    inputFieldLocator: Locator,
+    optionToBeSelected: string,
+  ) {
+    await test.step(`Handling the dropdown field`, async () => {
+      await inputFieldLocator.selectOption(optionToBeSelected);
+    });
   }
 }
