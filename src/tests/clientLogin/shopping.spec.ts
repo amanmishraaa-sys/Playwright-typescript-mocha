@@ -60,16 +60,14 @@ test.describe(`API Login and using token for further UI Test cases`, () => {
   );
 });
 
-test.describe
-  .serial(`Try different combinations of products to add in the cart and delete them`, () => {
-  test.beforeAll(`Login with API, store the token`, async ({ apiLogin }) => {});
+test.describe.serial(`Try different combinations of products to add in the cart and delete them`, () => {
 
   test(`Add "ADIDAS ORIGINAL" to cart and delete it at the cart page`, async ({
-    clientLoginShoppingPageWithToken,
+    clientLoginPageAfterLogin,
   }) => {
     const clientShoppingPage = new ClientLoginShoppingPage(
       baseurl,
-      clientLoginShoppingPageWithToken.page,
+      clientLoginPageAfterLogin.page,
     );
     await clientShoppingPage.selectProducts(["ADIDAS ORIGINAL"]);
     const clientCartPage = new ClientLoginCartPage(
@@ -84,11 +82,11 @@ test.describe
   });
 
   test(`Add "ZARA COAT 3" to cart and delete it at the cart page`, async ({
-    clientLoginShoppingPageWithToken,
+    clientLoginPageAfterLogin,
   }) => {
     const clientShoppingPage = new ClientLoginShoppingPage(
       baseurl,
-      clientLoginShoppingPageWithToken.page,
+      clientLoginPageAfterLogin.page,
     );
     await clientShoppingPage.selectProducts(["ZARA COAT 3"]);
     const clientCartPage = new ClientLoginCartPage(
@@ -103,11 +101,11 @@ test.describe
   });
 
   test(`Add "iphone 13 pro" to cart and delete it at the cart page`, async ({
-    clientLoginShoppingPageWithToken,
+    clientLoginPageAfterLogin,
   }) => {
     const clientShoppingPage = new ClientLoginShoppingPage(
       baseurl,
-      clientLoginShoppingPageWithToken.page,
+      clientLoginPageAfterLogin.page,
     );
     await clientShoppingPage.selectProducts(["iphone 13 pro"]);
     const clientCartPage = new ClientLoginCartPage(
@@ -122,11 +120,11 @@ test.describe
   });
 
   test(`Add "ADIDAS ORIGINAL","ZARA COAT 3" to cart and delete it at the cart page`, async ({
-    clientLoginShoppingPageWithToken,
+    clientLoginPageAfterLogin,
   }) => {
     const clientShoppingPage = new ClientLoginShoppingPage(
       baseurl,
-      clientLoginShoppingPageWithToken.page,
+      clientLoginPageAfterLogin.page,
     );
     await clientShoppingPage.selectProducts(["ADIDAS ORIGINAL", "ZARA COAT 3"]);
     const clientCartPage = new ClientLoginCartPage(
@@ -147,11 +145,11 @@ test.describe
   });
 
   test(`Add "ADIDAS ORIGINAL","iphone 13 pro" to cart and delete it at the cart page`, async ({
-    clientLoginShoppingPageWithToken,
+    clientLoginPageAfterLogin,
   }) => {
     const clientShoppingPage = new ClientLoginShoppingPage(
       baseurl,
-      clientLoginShoppingPageWithToken.page,
+      clientLoginPageAfterLogin.page,
     );
     await clientShoppingPage.selectProducts([
       "ADIDAS ORIGINAL",
@@ -175,11 +173,11 @@ test.describe
   });
 
   test(`Add "ADIDAS ORIGINAL","ZARA COAT 3","iphone 13 pro" to cart and delete it at the cart page`, async ({
-    clientLoginShoppingPageWithToken,
+    clientLoginPageAfterLogin,
   }) => {
     const clientShoppingPage = new ClientLoginShoppingPage(
       baseurl,
-      clientLoginShoppingPageWithToken.page,
+      clientLoginPageAfterLogin.page,
     );
     await clientShoppingPage.selectProducts([
       "ADIDAS ORIGINAL",
@@ -206,11 +204,11 @@ test.describe
   });
 
   test(`Add "ZARA COAT 3","iphone 13 pro" to cart and delete it at the cart page`, async ({
-    clientLoginShoppingPageWithToken,
+    clientLoginPageAfterLogin,
   }) => {
     const clientShoppingPage = new ClientLoginShoppingPage(
       baseurl,
-      clientLoginShoppingPageWithToken.page,
+      clientLoginPageAfterLogin.page,
     );
     await clientShoppingPage.selectProducts(["ZARA COAT 3", "iphone 13 pro"]);
     const clientCartPage = new ClientLoginCartPage(

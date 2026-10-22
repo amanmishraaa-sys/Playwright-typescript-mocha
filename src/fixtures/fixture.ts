@@ -27,6 +27,7 @@ type Fixtures = {
   clientLoginCartPageWithToken: ClientLoginCartPage;
   clientLoginShoppingPageWithToken: ClientLoginShoppingPage;
   clientLoginPage: ClientLoginPage;
+  clientLoginPageAfterLogin: ClientLoginPage;
 };
 export const test = base.extend<Fixtures>({
   afterLoginPage: async ({ page }, use) => {
@@ -73,5 +74,11 @@ export const test = base.extend<Fixtures>({
     const clientLoginPage = new ClientLoginPage(baseurl, page);
     await clientLoginPage.navigateToPage();
     await use(clientLoginPage);
+  },
+  clientLoginPageAfterLogin: async({page},use)=>{
+    const clientLoginPageAfterLogin = new ClientLoginPage(baseurl,page)
+    await clientLoginPageAfterLogin.navigateToPage();
+    await clientLoginPageAfterLogin.loginInto();
+    await use(clientLoginPageAfterLogin);
   },
 });

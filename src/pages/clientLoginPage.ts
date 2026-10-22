@@ -10,6 +10,8 @@ dotenv.config({
 
 export class ClientLoginPage {
   readonly loginPageUrl: string = process.env.clientLoginPage!;
+  readonly clientUsername: string = process.env.clientUsername!;
+  readonly clientPassword: string = process.env.clientPassword!;
   readonly utilManager: UtilManager;
   readonly titleOfThePage: Locator;
   readonly usernameField: Locator;
@@ -18,6 +20,7 @@ export class ClientLoginPage {
   readonly wrongPasswordErrorMessage: Locator;
   readonly invalidEmailErrorMessage: Locator;
   readonly registrationButton: Locator;
+  readonly headingForDashPage: Locator;
 
   constructor(
     readonly baseurl: string,
@@ -37,6 +40,7 @@ export class ClientLoginPage {
       .locator(".invalid-feedback")
       .filter({ hasText: "*Enter Valid Email" });
     this.registrationButton = page.getByText('Register here', { exact: true });
+    this.headingForDashPage = page.locator('h3').getByText('Automation');
   }
 
   /**
@@ -122,5 +126,13 @@ export class ClientLoginPage {
    */
   async clickOnRegistrationButton() {
     await this.utilManager.pAUtil.clickElement(this.registrationButton);
+  }
+
+  async loginInto(){
+    await this.enterUsername(this.clientUsername);
+    await this.enterPassword(this.clientPassword);
+    await this.clickOnLoginButton();
+    await this.utilManager.verifier.isVisible(this.headingForDashPage);
+    await this.utilManager.verifier.pageHasUrl(this.page,'https://rahulshettyacademy.com/client/#/dashboard/dash');
   }
 }
